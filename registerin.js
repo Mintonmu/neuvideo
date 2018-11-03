@@ -57,6 +57,7 @@ function registerin() {
         processData: false,
         contentType: false,
         success: function (result) {
+            console.log(result);
             if (result == "success") {
                 alert(result);
                 $('#myModal').modal('hide');

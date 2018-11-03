@@ -11,6 +11,7 @@ function login() {
 }
 
 function AjaxFunc() {
+    console.log("jup");
     var username = document.getElementById("ID").value;
     var password = document.getElementById("PASSWORD").value;
     $.ajax({
@@ -26,7 +27,7 @@ function AjaxFunc() {
                 }
                 return;
             }
-            self.location.href = "welcome.php"
+            location.href = "/admin/Backgroundpage/welcome.php"
 
         },
         error: function (xhr) {

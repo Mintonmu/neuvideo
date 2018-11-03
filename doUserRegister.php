@@ -14,18 +14,17 @@ $gender = $_POST["gender"];
 $birthdate = $_POST["birthdate"];
 $file = $_FILES["pic"];
 $email = $_POST['email'];
-$t = time() . $file["name"];
+$t = time() . $file['name'];
 $filename = "./image/" . $t;
-$filename = iconv("UTF-8", "gb2312", $filename);
 
 $sql = "select * from users where uname = '$uname'";
 $result = mysqli_query($link, $sql);
 $num = mysqli_num_rows($result);
-
 if ($num) {
-    echo "该用户已经存在";
+    echo "用户名已经存在";
 } else {
     $sql = "insert into users values(null,'$uname','$password','$gender','$birthdate','$filename','$email')";
+    echo $sql;
     $rs = mysqli_query($link, $sql);
     if ($rs) {
         move_uploaded_file($file["tmp_name"], $filename);
@@ -34,6 +33,7 @@ if ($num) {
         echo "error";
     }
 }
+
 
 
 

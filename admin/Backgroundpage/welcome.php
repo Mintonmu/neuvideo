@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <!--    --><?php
+    //
     //    if ($_SERVER['HTTP_REFERER'] == "") {
     //        echo "<script>alert('本系统不允许从地址栏访问');</script>";
     //        echo "<script>window.close();</script>";
@@ -9,7 +10,7 @@
     //    }
     //    ?>
     <meta charset="utf-8">
-    <title>后台管理系统</title>
+    <title>Neu后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Admin panel developed with the Bootstrap from Twitter.">
     <meta name="author" content="travis">
@@ -51,9 +52,9 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户 <b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-user.html">添加新用户</a></li>
+                            <li><a href="new-user.php">添加新用户</a></li>
                             <li class="divider"></li>
-                            <li><a href="users.html">管理用户</a></li>
+                            <li><a href="users.php">管理用户</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">管理员 <b
@@ -61,7 +62,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="new-role.html">添加管理员</a></li>
                             <li class="divider"></li>
-                            <li><a href="roles.html">管理管理员</a></li>
+                            <li><a href="roles.php">管理管理员</a></li>
                         </ul>
                     </li>
                     <li><a href="stats.html">状态</a></li>
@@ -76,17 +77,17 @@
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
-                    <li class="active"><a href="users.html">Users</a></li>
-                    <li><a href="roles.html">Roles</a></li>
+                    <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
+                    <li class="active"><a href="users.php">用户</a></li>
+                    <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
                     <li><a href="stats.html">General</a></li>
                     <li><a href="user-stats.html">Users</a></li>
                     <li><a href="visitor-stats.html">Visitors</a></li>
-                    <li class="nav-header"><i class="icon-user"></i> Profile</li>
-                    <li><a href="my-profile.html">My profile</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li class="nav-header"><i class="icon-user"></i>信息</li>
+                    <li><a href="my-profile.html">我的信息</a></li>
+                    <li><a href="#">用户设置</a></li>
+                    <li><a href="#">登出</a></li>
                 </ul>
             </div>
         </div>
@@ -94,24 +95,36 @@
             <div class="well hero-unit">
                 <h1>Welcome，<?php echo $_SESSION["adminname"]; ?></h1>
                 <p>欢迎您的登录，感谢您选择我们</p>
-                <p><a class="btn btn-success btn-large" href="users.html">Manage Users &raquo;</a></p>
+                <p><a class="btn btn-success btn-large" href="users.php">用户管理&raquo;</a></p>
             </div>
             <div class="row-fluid">
                 <div class="span3">
-                    <h3>Total Users</h3>
-                    <p><a href="users.html" class="badge badge-inverse">563</a></p>
+                    <h3>用户数量</h3>
+                    <p><a href="users.php" class="badge badge-inverse"><?php
+                            require("../../system/dbConn.php");
+                            $link = connect();
+                            $sql = "select count(*) as number from users";
+                            $rs = mysqli_query($link, $sql);
+                            echo mysqli_fetch_assoc($rs)['number'];
+                            ?></a></p>
                 </div>
                 <div class="span3">
-                    <h3>New Users Today</h3>
-                    <p><a href="users.html" class="badge badge-inverse">8</a></p>
+                    <h3>视频数量</h3>
+                    <p><a href="users.php" class="badge badge-inverse"><?php
+                            $sql = "select count(*) as videonumber from videos";
+                            $rs = mysqli_query($link, $sql);
+                            echo mysqli_fetch_assoc($rs)['videonumber'];
+
+                            ?></a></p>
                 </div>
                 <div class="span3">
-                    <h3>Pending</h3>
-                    <p><a href="users.html" class="badge badge-inverse">2</a></p>
-                </div>
-                <div class="span3">
-                    <h3>Roles</h3>
-                    <p><a href="roles.html" class="badge badge-inverse">3</a></p>
+                    <h3>评论数量</h3>
+                    <p><a href="users.php" class="badge badge-inverse"><?php
+                            $sql = "select count(*) as commentnumber from comments";
+                            $rs = mysqli_query($link, $sql);
+                            echo mysqli_fetch_assoc($rs)['commentnumber'];
+                            ?>
+                        </a></p>
                 </div>
             </div>
             <br/>
@@ -164,12 +177,9 @@
             </div>
         </div>
     </div>
-
     <hr>
-
     <footer class="well">
-        &copy; Strass - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> -
-        Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+        <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
     </footer>
 
 </div>

@@ -66,11 +66,6 @@
 <script src="js/Longin.js"></script>
 <div style="text-align:center;">
 </div>
-<?php
-if (isset($_GET["msg"])) {
-   // echo $_GET["msg"];
-}
 
-?>
 </body>
 </html>
