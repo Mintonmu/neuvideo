@@ -33,28 +33,28 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="my-profile.html">Profile</a></li>
+                    <li><a href="my-profile.html">我的信息</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="#">登出</a></li>
                 </ul>
             </div>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li><a href="welcome.php">Home</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <b
+                    <li><a href="welcome.php">主页</a></li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户<b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-user.php">New User</a></li>
+                            <li><a href="new-user.php">添加用户</a></li>
                             <li class="divider"></li>
-                            <li><a href="users.php">Manage Users</a></li>
+                            <li><a href="users.php">用户管理</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Roles <b
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">管理员<b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-role.html">New Role</a></li>
+                            <li><a href="new-role.php">添加管理员</a></li>
                             <li class="divider"></li>
-                            <li><a href="roles.php">Manage Roles</a></li>
+                            <li><a href="roles.php">管理员管理</a></li>
                         </ul>
                     </li>
                     <li><a href="stats.html">Stats</a></li>
@@ -153,7 +153,7 @@
                     </tr>
                     </tbody>
                 </table>
-                <a href="new-role.html" class="btn btn-success">New Role</a>
+                <a href="new-role.php" class="btn btn-success">New Role</a>
             </div>
         </div>
     </div>

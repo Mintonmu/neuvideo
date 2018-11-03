@@ -25,7 +25,10 @@
             </a>
             <a class="brand" href="#">Neu视频后台管理系统</a>
             <div class="btn-group pull-right">
-                <a class="btn" href="my-profile.html"><i class="icon-user"></i>管理员</a>
+                <a class="btn" href="my-profile.html"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
+                        session_start();
+                    }
+                    echo $_SESSION["adminname"]; ?></a>
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                     <span class="caret"></span>
                 </a>
@@ -49,7 +52,7 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">管理员<b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-role.html">添加管理员</a></li>
+                            <li><a href="new-role.php">添加管理员</a></li>
                             <li class="divider"></li>
                             <li><a href="roles.php">管理员管理</a></li>
                         </ul>

@@ -60,7 +60,7 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">管理员 <b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-role.html">添加管理员</a></li>
+                            <li><a href="new-role.php">添加管理员</a></li>
                             <li class="divider"></li>
                             <li><a href="roles.php">管理管理员</a></li>
                         </ul>

@@ -25,36 +25,38 @@
             </a>
             <a class="brand" href="#">Neu视频后台管理系统</a>
             <div class="btn-group pull-right">
-                <a class="btn" href="my-profile.html"><i class="icon-user"></i> </a>
+                <a class="btn" href="my-profile.html"><i class="icon-user"></i> <?php if (!isset($_SESSION)) {
+                        session_start();
+                    }
+                    echo $_SESSION["adminname"]; ?></a>
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="my-profile.html">Profile</a></li>
+                    <li><a href="my-profile.html">我的信息</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="#">登出</a></li>
                 </ul>
             </div>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li><a href="welcome.php">Home</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <b
+                    <li><a href="welcome.php">主页</a></li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户<b
                             class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-user.php">New User</a></li>
+                            <li><a href="new-user.php">添加用户</a></li>
                             <li class="divider"></li>
-                            <li><a href="users.php">Manage Users</a></li>
+                            <li><a href="users.php">用户管理</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Roles <b
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">管理员<b
                             class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-role.html">New Role</a></li>
+                            <li><a href="new-role.php">添加管理员</a></li>
                             <li class="divider"></li>
-                            <li><a href="roles.php">Manage Roles</a></li>
+                            <li><a href="roles.php">管理员管理</a></li>
                         </ul>
                     </li>
-                    <li><a href="stats.html">Stats</a></li>
                 </ul>
             </div>
         </div>
@@ -66,31 +68,31 @@
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
-                    <li><a href="users.php">Users</a></li>
-                    <li class="active"><a href="roles.php">Roles</a></li>
+                    <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
+                    <li><a href="users.php">用户</a></li>
+                    <li class="active"><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
                     <li><a href="stats.html">General</a></li>
                     <li><a href="user-stats.html">User</a></li>
                     <li><a href="visitor-stats.html">Visitor</a></li>
-                    <li class="nav-header"><i class="icon-user"></i> Profile</li>
-                    <li><a href="my-profile.html">My profile</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li class="nav-header"><i class="icon-user"></i> 信息</li>
+                    <li><a href="my-profile.html">我的信息</a></li>
+                    <li><a href="#">我的设置</a></li>
+                    <li><a href="#">登出</a></li>
                 </ul>
             </div>
         </div>
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>New Role
-                        <small>Add a new role</small>
+                    <h1>新管理员
+                        <small>添加一个新的管理员</small>
                     </h1>
                 </div>
                 <form class="form-horizontal">
                     <fieldset>
                         <div class="control-group">
-                            <label class="control-label" for="role">Role Name</label>
+                            <label class="control-label" for="role">管理员名称</label>
                             <div class="controls">
                                 <input type="text" class="input-xlarge" id="role"/>
                             </div>
