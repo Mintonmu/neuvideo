@@ -5,11 +5,6 @@
  * Date: 2018/10/27
  * Time: 8:57
  */
-if ($_SERVER['HTTP_REFERER'] == "") {
-    echo "<script>alert('本系统不允许从地址栏访问');</script>";
-    echo "<script>window.close();</script>";
-    exit();
-}
 ?>
 <h2>
     欢迎管理员[<?php

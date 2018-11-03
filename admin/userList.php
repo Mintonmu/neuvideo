@@ -11,5 +11,5 @@ if (!isset($_SESSION)){
 }
 
 if(!isset($_SESSION["adminname"])){
-    header("location:index.php?msg=您没有访问权限！请登录后访问！");
+    header("location:welcome.php?msg=您没有访问权限！请登录后访问！");
 }

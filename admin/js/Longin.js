@@ -26,7 +26,7 @@ function AjaxFunc() {
                 }
                 return;
             }
-            self.location.href = "adminwelcome.php"
+            self.location.href = "welcome.php"
 
         },
         error: function (xhr) {
