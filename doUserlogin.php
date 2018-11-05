@@ -15,7 +15,7 @@ if ($num > 0) {
     }
     $_SESSION["username"] = $uname;
     echo "success";
-   // header("location:welcome.php");
+    header("location:welcome.php");
 } else {
     echo "error";
 }

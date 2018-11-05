@@ -57,7 +57,6 @@ function registerin() {
         processData: false,
         contentType: false,
         success: function (result) {
-            console.log(result);
             if (result == "success") {
                 alert(result);
                 $('#myModal').modal('hide');
@@ -67,9 +66,6 @@ function registerin() {
                 $("input[name = 'gender']:checked").val('0');
                 $('#birthdate').val('');
                 $('#email').val('');
-            }
-            else {
-                alert(result);
             }
         },
         error: function (msg) {

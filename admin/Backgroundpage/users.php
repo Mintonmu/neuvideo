@@ -25,7 +25,7 @@
             </a>
             <a class="brand" href="#">Neu视频后台管理系统</a>
             <div class="btn-group pull-right">
-                <a class="btn" href="my-profile.html"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
+                <a class="btn" href="my-profile.php"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
                         session_start();
                     }
                     echo $_SESSION["adminname"]; ?></a>
@@ -33,7 +33,7 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="my-profile.html">我的信息</a></li>
+                    <li><a href="my-profile.php">我的信息</a></li>
                     <li class="divider"></li>
                     <li><a href="#">登出</a></li>
                 </ul>
@@ -77,8 +77,7 @@
                     <li><a href="user-stats.html">Users</a></li>
                     <li><a href="visitor-stats.html">Visitors</a></li>
                     <li class="nav-header"><i class="icon-user"></i> Profile</li>
-                    <li><a href="my-profile.html">我的信息</a></li>
-                    <li><a href="#">个人设置</a></li>
+                    <li><a href="my-profile.php">我的信息</a></li>
                     <li><a href="../Adminlogout.php">登出</a></li>
                 </ul>
             </div>
@@ -95,7 +94,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
-                        <th></th>
+                        <th>Description</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -105,7 +104,7 @@
                         $_GET['num'] = 1;
                     }
                     if (!isset($_GET["size"])) {
-                        $_GET['size'] = 10;
+                        $_GET['size'] = 5;
                     }
                     $ary = getUsersDate($_GET['num'], $_GET['size']);
 
@@ -211,4 +210,22 @@
     });
 </script>
 </body>
+<style>
+    html, body {
+        height: 95%;
+    }
+
+    body {
+        position: relative;
+        min-height: 450px;
+    }
+
+    footer {
+        position: absolute;
+        min-width: 100%;
+        bottom: 0;
+        left: 0;
+    }
+
+</style>
 </html>

@@ -6,7 +6,7 @@ if (!isset($_SESSION)) {
 }
 session_destroy();
 
-header("location:welcome.php");
+header("location:index.php");
 
 
 ?>

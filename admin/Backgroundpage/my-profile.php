@@ -25,7 +25,7 @@
           </a>
           <a class="brand" href="#">Strass Administration</a>
           <div class="btn-group pull-right">
-			<a class="btn" href="my-profile.html"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
+			<a class="btn" href="my-profile.php"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
                         session_start();
                     }
                     echo $_SESSION["adminname"]; ?></a>
@@ -33,7 +33,7 @@
               <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-			  <li><a href="my-profile.html">Profile</a></li>
+			  <li><a href="my-profile.php">Profile</a></li>
               <li class="divider"></li>
               <li><a href="#">Logout</a></li>
             </ul>
@@ -75,7 +75,7 @@
               <li><a href="user-stats.html">Users</a></li>
               <li><a href="visitor-stats.html">Visitors</a></li>
               <li class="nav-header"><i class="icon-user"></i> Profile</li>
-              <li class="active"><a href="my-profile.html">My profile</a></li>
+              <li class="active"><a href="my-profile.php">My profile</a></li>
               <li><a href="#">Settings</a></li>
 			  <li><a href="#">Logout</a></li> 
             </ul>

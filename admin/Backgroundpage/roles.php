@@ -5,7 +5,7 @@
     <title>Neu后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Admin panel developed with the Bootstrap from Twitter.">
-    <meta name="author" content="travis">
+    <meta name="author" content="muming">
 
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
     <link href="../assets/css/site.css" rel="stylesheet">
@@ -25,7 +25,7 @@
             </a>
             <a class="brand" href="#">Neu视频后台管理系统</a>
             <div class="btn-group pull-right">
-                <a class="btn" href="my-profile.html"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
+                <a class="btn" href="my-profile.php"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
                         session_start();
                     }
                     echo $_SESSION["adminname"]; ?></a>
@@ -33,7 +33,7 @@
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a href="my-profile.html">我的信息</a></li>
+                    <li><a href="my-profile.php">我的信息</a></li>
                     <li class="divider"></li>
                     <li><a href="#">登出</a></li>
                 </ul>
@@ -69,91 +69,97 @@
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
-                    <li><a href="users.php">Users</a></li>
-                    <li class="active"><a href="roles.php">Roles</a></li>
+                    <li class="nav-header"><i class="icon-wrench"></i> 用户和管理员</li>
+                    <li><a href="users.php">用户</a></li>
+                    <li class="active"><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
                     <li><a href="stats.html">General</a></li>
                     <li><a href="user-stats.html">Users</a></li>
                     <li><a href="visitor-stats.html">Visitors</a></li>
-                    <li class="nav-header"><i class="icon-user"></i> Profile</li>
-                    <li><a href="my-profile.html">My profile</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li class="nav-header"><i class="icon-user"></i> 信息</li>
+                    <li><a href="my-profile.php">我的信息</a></li>
+                    <li><a href="../Adminlogout.php">登出</a></li>
                 </ul>
             </div>
         </div>
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>Roles
-                        <small>Manage roles</small>
+                    <h1>管理员
+                        <small>管理员管理</small>
                     </h1>
                 </div>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Role</th>
+                        <th>Name</th>
                         <th>Description</th>
-                        <th>Slug</th>
-                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="list-roles">
-                        <td>1</td>
-                        <td>Admin</td>
-                        <td>Aliquam erat volutpat. Vivamus molestie tempor pellentesque. Praesent lobortis, neque.</td>
-                        <td>admin</td>
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span
-                                            class="caret"></span></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="list-roles">
-                        <td>2</td>
-                        <td>Moderator</td>
-                        <td>Phasellus scelerisque, quam ac bibendum pulvinar, erat ligula pulvinar risus, in
-                            ultricies...
-                        </td>
-                        <td>mod</td>
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span
-                                            class="caret"></span></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="list-roles">
-                        <td>3</td>
-                        <td>User</td>
-                        <td>Donec cursus, velit eu fermentum ullamcorper, libero est.</td>
-                        <td>user</td>
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span
-                                            class="caret"></span></a>
-                                <ul class="dropdown-menu pull-right">
-                                    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                    <?php
+                    require("./getpages.php");
+                    if (!isset($_GET["num"])) {
+                        $_GET['num'] = 1;
+                    }
+                    if (!isset($_GET["size"])) {
+                        $_GET['size'] = 5;
+                    }
+                    $ary = getRolesDate($_GET['num'], $_GET['size']);
+                    while ($num = mysqli_fetch_assoc($ary[0])) {
+                        echo '<tr class="list-roles">';
+                        echo "<td>" . $num['adminid'] . "</td >";
+                        echo "<td>" . $num['adminname'] . "</td >";
+                        echo '<td>
+                               <div class="btn-group">
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">设置<span
+                                                                    class="caret"></span></a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="#"><i class="icon-pencil"></i>编辑</a></li>
+                                                            <li><a href="#"><i class="icon-trash"></i> 删除</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>';
+                        echo "</tr>";
+                    }
+                    ?>
                     </tbody>
                 </table>
-                <a href="new-role.php" class="btn btn-success">New Role</a>
+                <div class="pagination">
+                    <ul>
+                        <?php
+                        //echo 1;
+                        if (!isset($_GET["num"])) {
+                            $_GET['num'] = 1;
+                        }
+                        if (!isset($_GET["size"])) {
+                            $_GET['size'] = 5;
+                        }
+                        $ary = getUsersDate($_GET['num'], $_GET['size']);
+                        //echo $ary[1];
+
+                        if (intval($_GET['num']) == 1) {
+                            echo "<li><a href=\"roles.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
+
+                        } else {
+                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
+                        }
+                        for ($i = 1; $i <= $ary[1]; $i++) {
+                            echo "<li>" . "<a href=\"roles.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
+                        }
+                        if (intval($_GET['num']) == $ary[2]) {
+                            echo "<li><a href=\"roles.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
+
+                        } else {
+                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
+                        }
+                        ?>
+                    </ul>
+                </div>
+
+
+                <a href="new-role.php" class="btn btn-success">添加管理员</a>
             </div>
         </div>
     </div>
@@ -178,4 +184,22 @@
     });
 </script>
 </body>
+<style>
+    html, body {
+        height: 95%;
+    }
+
+    body {
+        position: relative;
+        min-height: 450px;
+    }
+
+    footer {
+        position: absolute;
+        min-width: 100%;
+        bottom: 0;
+        left: 0;
+    }
+
+</style>
 </html>
