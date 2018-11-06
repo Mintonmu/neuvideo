@@ -72,8 +72,8 @@
                     <li><a href="users.php">用户</a></li>
                     <li class="active"><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
-                    <li><a href="stats.html">General</a></li>
-                    <li><a href="user-stats.html">User</a></li>
+                    <li><a href="video.php">General</a></li>
+                    <li><a href="comment.php">User</a></li>
                     <li><a href="visitor-stats.html">Visitor</a></li>
                     <li class="nav-header"><i class="icon-user"></i> 信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
@@ -92,25 +92,19 @@
                 <form class="form-horizontal">
                     <fieldset>
                         <div class="control-group">
-                            <label class="control-label" for="role">管理员名称</label>
+                            <label class="control-label" for="role">账号</label>
                             <div class="controls">
                                 <input type="text" class="input-xlarge" id="role"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="description">Description</label>
+                            <label class="control-label" for="password">密码</label>
                             <div class="controls">
-                                <textarea class="input-xlarge" id="description" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="slug">Slug</label>
-                            <div class="controls">
-                                <input type="text" class="input-xlarge" id="slug"/>
+                                <input type="password" class="input-xlarge" id="password"/>
                             </div>
                         </div>
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-success btn-large" value="Save Role"/> <a class="btn"
+                            <input type="submit" class="btn btn-success btn-large" value="保存"/> <a class="btn"
                                                                                                           href="roles.php">取消</a>
                         </div>
                     </fieldset>

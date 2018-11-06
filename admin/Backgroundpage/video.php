@@ -29,7 +29,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Neu视频后台管理系统</a>
+          <a class="brand" href="#"></a>
           <div class="btn-group pull-right">
 			<a class="btn" href="my-profile.php"><i class="icon-user"></i> Admin</a>
             <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
@@ -38,7 +38,7 @@
             <ul class="dropdown-menu">
 			  <li><a href="my-profile.php">Profile</a></li>
               <li class="divider"></li>
-              <li><a href="#">登出</a></li>
+              <li><a href="#">Logout</a></li>
             </ul>
           </div>
           <div class="nav-collapse">
@@ -58,7 +58,7 @@
 					<li><a href="roles.php">Manage Roles</a></li>
 				</ul>
 			  </li>
-			  <li><a href="stats.html">Stats</a></li>
+			  <li><a href="video.php">Stats</a></li>
             </ul>
           </div>
         </div>
@@ -74,8 +74,8 @@
               <li><a href="users.php">Users</a></li>
               <li><a href="roles.php">Roles</a></li>
               <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
-              <li><a href="stats.html">General</a></li>
-              <li class="active"><a href="user-stats.html">User</a></li>
+              <li class="active"><a href="video.php">General</a></li>
+              <li><a href="comment.php">User</a></li>
               <li><a href="visitor-stats.html">Visitor</a></li>
               <li class="nav-header"><i class="icon-user"></i> Profile</li>
               <li><a href="my-profile.php">My profile</a></li>
@@ -87,18 +87,20 @@
         <div class="span9">
 		  <div class="row-fluid">
 			<div class="page-header">
-				<h1>Users Stats <small>User statistics...</small></h1>
+				<h1>Site Stats <small>Some statistics...</small></h1>
 			</div>
 			<div id="placeholder" style="width:80%;height:300px;"></div>
+			<br />
+			<div id="visits" style="width:80%;height:300px;"></div>
 		  </div>
         </div>
       </div>
 
       <hr>
 
-      <footer class="well">
-        &copy; Strass - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
-      </footer>
+        <footer class="well">
+            <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
+        </footer>
 
     </div>
 
@@ -110,14 +112,23 @@
 	$(function () {
 		var data = [
 		{
-			label: 'Example',
-			data: [[0, 2656], [1, 3565], [2, 1574], [3, 5787], [4, 5451], [5, 8798]]
+			label: 'Page Views',
+			data: [[0, 19000], [1, 15500], [2, 11100], [3, 15500]]
+		}];
+		var dataVisits = [
+		{
+			label: 'Visits',
+			data: [[0, 1980], [1, 1198], [2, 830], [3, 1550]]
 		}];
 		var options = {
 			legend: {
 				show: true,
 				margin: 10,
 				backgroundOpacity: 0.5
+			},
+			points: {
+				show: true,
+				radius: 3
 			},
 			lines: {
 				show: true
@@ -132,7 +143,32 @@
 				tickDecimals: 0
 			},
 			yaxis: {
-				tickSize:3000,
+				tickSize:1000,
+				tickDecimals: 0
+			}
+		};
+		var optionsVisits = {
+			legend: {
+				show: true,
+				margin: 10,
+				backgroundOpacity: 0.5
+			},
+			bars: {
+				show: true,
+				barWidth: 0.5,
+				align: 'center'
+			},
+			grid: {
+				borderWidth:1,
+				hoverable: true
+			},
+			xaxis: {
+				axisLabel: 'Month',
+				ticks: [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']],
+				tickDecimals: 0
+			},
+			yaxis: {
+				tickSize:1000,
 				tickDecimals: 0
 			}
 		};
@@ -149,7 +185,7 @@
 			}).appendTo("body").fadeIn(200);
 		}
 		var previousPoint = null;
-		$("#placeholder").bind("plothover", function (event, pos, item) {
+		$("#placeholder, #visits").bind("plothover", function (event, pos, item) {
 			if (item) {
 				if (previousPoint != item.dataIndex) {
 					previousPoint = item.dataIndex;
@@ -164,6 +200,7 @@
 			}
 		});
 		$.plot( $("#placeholder") , data, options );
+		$.plot( $("#visits") , dataVisits, optionsVisits );
 	});
 	</script>
   </body>

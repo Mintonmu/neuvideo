@@ -8,7 +8,7 @@
     <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
     <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    <title>用户登录</title>
+    <title>Neu用户登录</title>
     <link href="index.css" rel="stylesheet" type="text/css"/>
 </head>
 
@@ -71,7 +71,7 @@
                             <br>
                             <input type="date" name="birthdate" id="birthdate">
                             <br>
-                            <label>文件上传:</label>
+                            <label>上传头像:</label>
                             <br>
                             <span class="btn btn-success fileinput-button">
                                 <span>上传</span>

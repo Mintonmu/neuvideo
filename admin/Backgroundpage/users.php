@@ -57,7 +57,7 @@
                             <li><a href="roles.php">管理员管理</a></li>
                         </ul>
                     </li>
-                    <li><a href="stats.html">状态</a></li>
+                    <li><a href="video.php">状态</a></li>
                 </ul>
             </div>
         </div>
@@ -73,8 +73,8 @@
                     <li class="active"><a href="users.php">用户</a></li>
                     <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
-                    <li><a href="stats.html">General</a></li>
-                    <li><a href="user-stats.html">Users</a></li>
+                    <li><a href="video.php">General</a></li>
+                    <li><a href="comment.php">Users</a></li>
                     <li><a href="visitor-stats.html">Visitors</a></li>
                     <li class="nav-header"><i class="icon-user"></i> Profile</li>
                     <li><a href="my-profile.php">我的信息</a></li>

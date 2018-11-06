@@ -38,7 +38,7 @@
             <canvas id="demo-canvas"></canvas>
             <div class="logo_box">
                 <h3>欢迎使用后台管理系统</h3>
-                <form action="" method="post">
+                <form action="" method="post" id="loginform">
                     <div class="input_outer">
                         <span class="u_user"></span>
                         <input id="ID" name="adminname" class="text" style="color: #000000 !important" type="text"
@@ -49,14 +49,15 @@
                         <input id="PASSWORD" name="password" class="text"
                                style="color: #000000 !important; position:absolute; z-index:100;" value=""
                                type="password" placeholder="请输入密码">
-                    </div>
-                    <div id="LOGIN" class="mb2"><a class="act-but submit" href="javascript:;" onclick="login()"
+                    </div b>
+                    <div id="LOGIN" class="mb2"><a class="act-but submit" href="javascript:;" onclick="login();"
                                                    style="color: #FFFFFF">登录</a></div>
                 </form>
             </div>
         </div>
     </div>
 </div><!-- /container -->
+
 <script src="js/TweenLite.min.js"></script>
 <script src="js/EasePack.min.js"></script>
 <script src="js/jquery.js"></script>

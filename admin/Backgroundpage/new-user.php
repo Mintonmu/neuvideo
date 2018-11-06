@@ -57,7 +57,7 @@
                             <li><a href="roles.php">管理员管理</a></li>
                         </ul>
                     </li>
-                    <li><a href="stats.html">状态</a></li>
+                    <li><a href="video.php">状态</a></li>
                 </ul>
             </div>
         </div>
@@ -73,8 +73,8 @@
                     <li class="active"><a href="users.php">用户</a></li>
                     <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
-                    <li><a href="stats.html">General</a></li>
-                    <li><a href="user-stats.html">Users</a></li>
+                    <li><a href="video.php">General</a></li>
+                    <li><a href="comment.php">Users</a></li>
                     <li><a href="visitor-stats.html">Visitors</a></li>
                     <li class="nav-header"><i class="icon-user"></i>信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
@@ -86,50 +86,52 @@
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>New User
-                        <small>User registration</small>
+                    <h1>
+                        <small>用户注册</small>
                     </h1>
                 </div>
                 <form class="form-horizontal">
                     <fieldset>
                         <div class="control-group">
-                            <label class="control-label" for="name">Name</label>
+                            <label class="control-label" for="name">账户</label>
                             <div class="controls">
                                 <input type="text" class="input-xlarge" id="name"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="email">E-mail</label>
+                            <label class="control-label" for="email">密码</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="email"/>
+                                <input type="password" class="input-xlarge" id="Password"/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="gender">性别</label>
+                            <div class="controls">
+                                <input type="radio" name="gender" value="0" checked>男
+                                &nbsp;
+                                <input type="radio" name="gender" value="1">女
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="birthdate">生日</label>
+                            <div class="controls">
+                                <input type="date" class="input-xlarge" id="birthdate"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="pnohe">Phone</label>
+                            <label class="control-label" for="file">上传头像</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="phone"/>
+                               <span class="btn btn-success fileinput-button">
+                                <input type="file" name="pic" id="ipc" accept="image/gif,image/png,image/jpeg">
+                            </span>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="city">City</label>
+                            <label class="control-label" for="email">email</label>
                             <div class="controls">
                                 <input type="text" class="input-xlarge" id="city"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="role">Role</label>
-                            <div class="controls">
-                                <select id="role">
-                                    <option value="admin">Admin</option>
-                                    <option value="mod">Moderator</option>
-                                    <option value="user" selected>User</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="active">Active?</label>
-                            <div class="controls">
-                                <input type="checkbox" id="active" value="1"/>
                             </div>
                         </div>
                         <div class="form-actions">

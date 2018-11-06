@@ -8,10 +8,11 @@ function login() {
     } else {
         AjaxFunc();
     }
+
 }
 
+
 function AjaxFunc() {
-    console.log("jup");
     var username = document.getElementById("ID").value;
     var password = document.getElementById("PASSWORD").value;
     $.ajax({
@@ -20,7 +21,6 @@ function AjaxFunc() {
         dataType: "text",
         data: {"adminname": username, "password": password},
         success: function (data) {
-            console.log(data);
             if (data != "success") {
                 if (confirm("您的密码或者用户名错误！！")) {
                     document.getElementById("ID").focus();

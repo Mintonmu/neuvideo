@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--    --><?php
-    //
-    //    if ($_SERVER['HTTP_REFERER'] == "") {
-    //        echo "<script>alert('本系统不允许从地址栏访问');</script>";
-    //        echo "<script>window.close();</script>";
-    //        exit();
-    //    }
-    //    ?>
+    <?php
+    if ($_SERVER['HTTP_REFERER'] == "") {
+        echo "<script>confirm('本系统不允许从地址栏访问');</script>";
+        echo "<script>location.href= \"../index.php\";</script>";
+        exit();
+    }
+    ?>
     <meta charset="utf-8">
     <title>Neu后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,7 +64,7 @@
                             <li><a href="roles.php">管理管理员</a></li>
                         </ul>
                     </li>
-                    <li><a href="stats.html">状态</a></li>
+                    <li><a href="video.php">状态</a></li>
                 </ul>
             </div>
         </div>
@@ -80,13 +79,11 @@
                     <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
                     <li class="active"><a href="users.php">用户</a></li>
                     <li><a href="roles.php">管理员</a></li>
-                    <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
-                    <li><a href="stats.html">General</a></li>
-                    <li><a href="user-stats.html">Users</a></li>
-                    <li><a href="visitor-stats.html">Visitors</a></li>
+                    <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
+                    <li><a href="video.php">视频管理</a></li>
+                    <li><a href="comment.php">评论管理</a></li>
                     <li class="nav-header"><i class="icon-user"></i>信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
-                    <li><a href="#">用户设置</a></li>
                     <li><a href="#">登出</a></li>
                 </ul>
             </div>

@@ -55,7 +55,7 @@
 					<li><a href="roles.php">Manage Roles</a></li>
 				</ul>
 			  </li>
-			  <li><a href="stats.html">Stats</a></li>
+			  <li><a href="video.php">Stats</a></li>
             </ul>
           </div>
         </div>
@@ -71,8 +71,8 @@
               <li><a href="users.php">Users</a></li>
               <li><a href="roles.php">Roles</a></li>
               <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
-              <li><a href="stats.html">General</a></li>
-              <li><a href="user-stats.html">Users</a></li>
+              <li><a href="video.php">General</a></li>
+              <li><a href="comment.php">Users</a></li>
               <li><a href="visitor-stats.html">Visitors</a></li>
               <li class="nav-header"><i class="icon-user"></i> Profile</li>
               <li class="active"><a href="my-profile.php">My profile</a></li>
