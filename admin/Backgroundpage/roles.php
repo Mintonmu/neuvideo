@@ -107,16 +107,16 @@
                         $_GET['size'] = 5;
                     }
                     $ary = getRolesDate($_GET['num'], $_GET['size']);
+
                     while ($num = mysqli_fetch_assoc($ary[0])) {
                         echo '<tr class="list-roles">';
-                        echo "<td>" . $num['adminid'] . "</td >";
-                        echo "<td>" . $num['adminname'] . "</td >";
+                        echo "<td >" . $num['adminid'] . "</td >";
+                        echo "<td id='" . "adminname_" . $num['adminid'] . "'>" . $num['adminname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">设置<span
-                                                                    class="caret"></span></a>
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"]  . '\')">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="#"><i class="icon-pencil"></i>编辑</a></li>
+                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\''.'adminname_'.$num['adminid'].'\')"><i class="icon-pencil" ></i>编辑</a></li>
                                                             <li><a href="#"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
@@ -163,6 +163,35 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Register</h4>
+                </div>
+                <div class="modal-body">
+                    <!--                    <div class="alert alert-warning" id="tooltip">-->
+                    <!--                        <a href="#" class="close" data-dismiss="alert">-->
+                    <!--                            &times;-->
+                    <!--                        </a>-->
+                    <!--                        <strong>警告！</strong>您两次输入的密码不一致-->
+                    <!--                    </div>-->
+                    <input type="hidden" id="adminid">
+                    <input type="hidden" id="adminname_id">
+                    <label style="vertical-align: inherit;">用 户 名:</label>
+                    <input type="text" name="adminname" id="adminname" placeholder="用户名">
+                    <label style="vertical-align: inherit;">密 码:</label>
+                    <input type="password" name="password" id="password" placeholder="密码">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="editsubmit()">提交更改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <hr>
     <footer class="well">
         <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
@@ -202,4 +231,48 @@
     }
 
 </style>
+
+
+<script>
+    var transdata = function (adminame, password, adminid) {
+        $("#adminname").val(adminame);
+        $("#password").val(password);
+        $("#adminid").val(adminid);
+
+    };
+    var editsubmit = function () {
+
+        var adminname = $("#adminname").val();
+        var password = $("#password").val();
+        var adminid = $("#adminid").val();
+
+        $.ajax({
+            url: 'process.php',
+            type: 'post',
+            data: {"adminname": adminname, "password": password, "adminid": adminid},
+            dataType: 'text',
+            success: function (result) {
+                $("#myModal").modal('hide');
+                console.log(result);
+                if (result == "success") {
+                    $("#adminname").val(adminname);
+                    $("#password").val(password);
+                    alert("您已经修改成功");
+                    location.reload(true);
+                }
+            },
+            error: function (msg) {
+                alert(msg);
+            }
+        })
+
+    }
+
+    function f(nameid) {
+        console.log(nameid);
+        $("#adminname_id").val(nameid);
+
+    }
+
+</script>
 </html>

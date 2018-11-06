@@ -24,7 +24,6 @@ if ($num) {
     echo "用户名已经存在";
 } else {
     $sql = "insert into users values(null,'$uname','$password','$gender','$birthdate','$filename','$email')";
-    echo $sql;
     $rs = mysqli_query($link, $sql);
     if ($rs) {
         move_uploaded_file($file["tmp_name"], $filename);
