@@ -6,6 +6,12 @@
  * Date: 2018/10/27
  * Time: 9:16
  */
+define('HOST','localhost:8889');
+define('USER','root');
+define('PWD','root');
+define('DATANAME','neuvideo');
+define('CHARSET','UTF-8');
+define('PORT','8889');
 class DBconnect
 {
     private $host = "localhost:8889";

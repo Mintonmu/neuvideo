@@ -1,10 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE>
+<html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>jquery黑色横向二级导航</title>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Neu视频</title>
+    <link rel="stylesheet" type="text/css" href="assets/banner.css">
     <script src="./assets/jquery.min.js" type="text/javascript"></script>
 
 </head>
@@ -27,7 +27,6 @@
 
     .nav * a:hover {
         background-color: #82ce18;
-        /* 鼠标经过时的红色背景，可自定义 */
     }
 
     .menu {
@@ -108,11 +107,7 @@
 </script>
 
 <body>
-
 <div id="content">
-
-    <br><br><br>
-    <!--DEMO start-->
     <div class="menu">
         <ul class="nav">
             <li><a href="#">jQuery特效</a>
@@ -177,11 +172,40 @@
             </li>
         </ul>
     </div>
-    <!--DEMO end-->
 
 </div>
-<div style="text-align:center;">
+
+
+<div class="banner" id="banner1" style="margin: 50px auto;">
+    <div class="banner-view"></div>
+    <div class="banner-btn"></div>
+    <div class="banner-number"></div>
+    <div class="banner-progres"></div>
 </div>
+<script type="text/javascript" src="assets/banner.js"></script>
+<script type="text/javascript">
+
+    var banner = new FragmentBanner({
+        container : "#banner1",//选择容器 必选
+        imgs : ['index/a1.png','index/a2.png','index/a3.png','index/a4.png','index/a5.png'],//图片集合 必选
+        size : {
+            width : 1000,
+            height : 560
+        },//容器的大小 可选
+        //行数与列数 可选
+        grid : {
+            line : 12,
+            list : 14
+        },
+        index: 0,//图片集合的索引位置 可选
+        type : 2,//切换类型 1 ， 2 可选
+        boxTime : 5000,//小方块来回运动的时长 可选
+        fnTime : 10000//banner切换的时长 可选
+    });
+</script>
+
+<!--<div style="text-align:center;">-->
+<!--</div>-->
 </body>
 
 </html>
