@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>My Profile | Strass</title>
+    <title>Neu视频后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Admin panel developed with the Bootstrap from Twitter.">
     <meta name="author" content="travis">
@@ -23,7 +23,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Strass Administration</a>
+          <a class="brand" href="welcome.php">Neu视频后台管理系统</a>
           <div class="btn-group pull-right">
 			<a class="btn" href="my-profile.php"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
                         session_start();
@@ -35,26 +35,28 @@
             <ul class="dropdown-menu">
 			  <li><a href="my-profile.php">Profile</a></li>
               <li class="divider"></li>
-              <li><a href="#">Logout</a></li>
+              <li><a href="#">登出</a></li>
             </ul>
           </div>
           <div class="nav-collapse">
             <ul class="nav">
-			<li><a href="welcome.php">Home</a></li>
-              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="new-user.php">New User</a></li>
-					<li class="divider"></li>
-					<li><a href="users.php">Manage Users</a></li>
-				</ul>
-			  </li>
-              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Roles <b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li><a href="new-role.php">New Role</a></li>
-					<li class="divider"></li>
-					<li><a href="roles.php">Manage Roles</a></li>
-				</ul>
-			  </li>
+                <li><a href="welcome.php">主页</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户 <b
+                                class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="new-user.php">添加新用户</a></li>
+                        <li class="divider"></li>
+                        <li><a href="users.php">管理用户</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">管理员 <b
+                                class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="new-role.php">添加管理员</a></li>
+                        <li class="divider"></li>
+                        <li><a href="roles.php">管理管理员</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">视频<b
                                 class="caret"></b></a>
                     <ul class="dropdown-menu">
@@ -81,70 +83,37 @@
         <div class="span3">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-              <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
-              <li><a href="users.php">Users</a></li>
-              <li><a href="roles.php">Roles</a></li>
-              <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
-              <li><a href="video.php">General</a></li>
-              <li><a href="comment.php">Users</a></li>
-              <li><a href="visitor-stats.html">Visitors</a></li>
-              <li class="nav-header"><i class="icon-user"></i> Profile</li>
-              <li class="active"><a href="my-profile.php">My profile</a></li>
-              <li><a href="#">Settings</a></li>
-			  <li><a href="#">Logout</a></li> 
+                <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
+                <li class="active"><a href="users.php">用户</a></li>
+                <li><a href="roles.php">管理员</a></li>
+                <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
+                <li><a href="video.php">视频管理</a></li>
+                <li><a href="comment.php">评论管理</a></li>
+                <li class="nav-header"><i class="icon-user"></i>信息</li>
+                <li><a href="my-profile.php">我的信息</a></li>
+                <li><a href="../Adminlogout.php">登出</a></li>
             </ul>
           </div>
         </div>
         <div class="span9">
 		  <div class="row-fluid">
 			<div class="page-header">
-				<h1>My profile <small>Update info</small></h1>
+				<h1>我的信息<small>相关</small></h1>
 			</div>
 			<form class="form-horizontal">
 				<fieldset>
 					<div class="control-group">
-						<label class="control-label" for="name">Name</label>
+						<label class="control-label" for="name">姓名</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="name" value="Admin" />
+							<input type="text" class="input-xlarge" id="name" value="" />
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="email">E-mail</label>
+						<label class="control-label" for="city">密码</label>
 						<div class="controls">
-							<input type="text" class="input-xlarge" id="email" value="travis@provider.com" />
+							<input type="password" class="input-xlarge" id="city" value="My City" />
 						</div>
 					</div>
-					<div class="control-group">
-						<label class="control-label" for="pnohe">Phone</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="phone" value="xxx-xxx-xxxx" />
-						</div>
-					</div>
-					<div class="control-group">
-						<label class="control-label" for="city">City</label>
-						<div class="controls">
-							<input type="text" class="input-xlarge" id="city" value="My City" />
-						</div>
-					</div>	
-					<div class="control-group">
-						<label class="control-label" for="role">Role</label>
-						<div class="controls">
-							<select id="role">
-								<option value="admin" selected>Admin</option>
-								<option value="mod">Moderator</option>
-								<option value="user">User</option>
-							</select>
-						</div>
-					</div>	
-					<div class="control-group">
-						<label class="control-label" for="active">Active?</label>
-						<div class="controls">
-							<input type="checkbox" id="active" value="1" checked />
-						</div>
-					</div>
-					<div class="form-actions">
-						<input type="submit" class="btn btn-success btn-large" value="Save Changes" /> <a class="btn" href="users.php">Cancel</a>
-					</div>					
 				</fieldset>
 			</form>
 		  </div>

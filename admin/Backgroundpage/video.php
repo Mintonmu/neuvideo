@@ -30,7 +30,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#">Neu视频后台管理系统</a>
+            <a class="brand" href="welcome.php">Neu视频后台管理系统</a>
             <div class="btn-group pull-right">
                 <a class="btn" href="my-profile.php"><i class="icon-user"></i> <?php if (!isset($_SESSION)) {
                         session_start();
@@ -90,17 +90,15 @@
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
-                    <li><a href="users.php">Users</a></li>
-                    <li><a href="roles.php">Roles</a></li>
-                    <li class="nav-header"><i class="icon-signal"></i> Statistics</li>
-                    <li class="active"><a href="video.php">General</a></li>
-                    <li><a href="comment.php">User</a></li>
-                    <li><a href="visitor-stats.html">Visitor</a></li>
-                    <li class="nav-header"><i class="icon-user"></i> Profile</li>
-                    <li><a href="my-profile.php">My profile</a></li>
-                    <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
+                    <li class="active"><a href="users.php">用户</a></li>
+                    <li><a href="roles.php">管理员</a></li>
+                    <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
+                    <li><a href="video.php">视频管理</a></li>
+                    <li><a href="comment.php">评论管理</a></li>
+                    <li class="nav-header"><i class="icon-user"></i>信息</li>
+                    <li><a href="my-profile.php">我的信息</a></li>
+                    <li><a href="../Adminlogout.php">登出</a></li>
                 </ul>
             </div>
         </div>
