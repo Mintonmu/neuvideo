@@ -57,7 +57,21 @@
                             <li><a href="roles.php">管理员管理</a></li>
                         </ul>
                     </li>
-                    <li><a href="video.php">状态</a></li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">视频<b
+                                    class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="new-video.php">添加视频</a></li>
+                            <li class="divider"></li>
+                            <li><a href="video.php">视频管理</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
+                                    class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="divider"></li>
+                            <li><a href="comment.php">评论管理</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -126,30 +140,6 @@
                     }
 
                     ?>
-                    <!--                    <tr class="list-users">-->
-                    <!--                        <td>10</td>-->
-                    <!--                        <td>Joni D. Soto</td>-->
-                    <!--                        <td>jonidsoto@provider.com</td>-->
-                    <!--                        <td>215-xxx-xxxx</td>-->
-                    <!--                        <td>Philadelphia, PA</td>-->
-                    <!--                        <td>User</td>-->
-                    <!--                        <td><span class="label label-important">Inactive</span></td>-->
-                    <!--                        <td>-->
-                    <!--                            <div class="btn-group">-->
-                    <!--                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span-->
-                    <!--                                            class="caret"></span></a>-->
-                    <!--                                <ul class="dropdown-menu">-->
-                    <!--                                    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>-->
-                    <!--                                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>-->
-                    <!--                                    <li><a href="#"><i class="icon-user"></i> Details</a></li>-->
-                    <!--                                    <li class="nav-header">Permissions</li>-->
-                    <!--                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Admin</strong></a></li>-->
-                    <!--                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Moderator</strong></a></li>-->
-                    <!--                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>User</strong></a></li>-->
-                    <!--                                </ul>-->
-                    <!--                            </div>-->
-                    <!--                        </td>-->
-                    <!--                    </tr>-->
                     </tbody>
                 </table>
                 <div class="pagination">

@@ -57,7 +57,21 @@
                             <li><a href="roles.php">管理员管理</a></li>
                         </ul>
                     </li>
-                    <li><a href="video.php">状态</a></li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">视频<b
+                                    class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="new-video.php">添加视频</a></li>
+                            <li class="divider"></li>
+                            <li><a href="video.php">视频管理</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
+                                    class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li class="divider"></li>
+                            <li><a href="comment.php">评论管理</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
