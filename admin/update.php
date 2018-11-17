@@ -10,6 +10,8 @@ include '../system/dbConn.php';
 $p = new DataBase();
 date_default_timezone_set("Asia/Shanghai");
 
+
+//更新用户数据
 if (isset($_POST['user_pro'])) {
     $uname = $_POST['username'];
     $gender = $_POST['type'];
@@ -60,3 +62,5 @@ if (isset($_POST['user_pro'])) {
         return;
     }
 }
+
+//

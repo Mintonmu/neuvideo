@@ -1,5 +1,12 @@
 <!DOCTYPE>
 <html>
+<?php
+if ($_SERVER['HTTP_REFERER'] == "") {
+    echo "<script>confirm('本系统不允许从地址栏访问');</script>";
+    echo "<script>location.href= \"index.php\";</script>";
+    exit();
+}
+?>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -76,34 +83,34 @@
     <div class="banner-progres"></div>
 </div>
 <div class="container">
-    <?php
-    $r = $d->executeSql("select * from videotype");
-    while ($row = mysqli_fetch_assoc($r)) {
-        echo '<div align="center">
-        <h1 style="color: #F0F8FF">' . $row['typename'] . '</h1>
-        </div>';
-        echo '<div class="row">';
-        $rr = $d->executeSql("SELECT * FROM ( 
-                                SELECT *, ABS(NOW() - uploaddate) AS diffTime 
-                                FROM videos
-                                ORDER BY diffTime ASC 
-                                ) videos where tid = " . $row['tid'] . " LIMIT 3");
-        while ($row2 = mysqli_fetch_assoc($rr)) {
-            $video_id = $row2['vid'];
-            $video_name = $row2['videoname'];
-            $video_url = 'videodetail.php?vid=' . $video_id;
-            $video_pic = 'admin/' . $row2['pic'];
-            echo '<div class="col-xs-6 col-md-4" align="center">' .
-
-                '<a href="' . $video_url . '" class="thumbnail">' .
-                '<img src="' . $video_pic . '" alt="' . $video_name . '">' .
-                '</a>' .
-                '<a href="' . $video_url . '"><lable id="title" > <font size="5">' . $video_name . '</font></lable></a>' .
-                '</div>';
-        }
-        echo '</div>';
-    }
-    ?>
+<!--    --><?php
+//    $r = $d->executeSql("select * from videotype");
+//    while ($row = mysqli_fetch_assoc($r)) {
+//        echo '<div align="center">
+//        <h1 style="color: #F0F8FF">' . $row['typename'] . '</h1>
+//        </div>';
+//        echo '<div class="row">';
+//        $rr = $d->executeSql("SELECT * FROM (
+//                                SELECT *, ABS(NOW() - uploaddate) AS diffTime
+//                                FROM videos
+//                                ORDER BY diffTime ASC
+//                                ) videos where tid = " . $row['tid'] . " LIMIT 3");
+//        while ($row2 = mysqli_fetch_assoc($rr)) {
+//            $video_id = $row2['vid'];
+//            $video_name = $row2['videoname'];
+//            $video_url = 'videodetail.php?vid=' . $video_id;
+//            $video_pic = 'admin/videoimage/' . $row2['pic'];
+//            echo '<div class="col-xs-6 col-md-4" align="center">' .
+//
+//                '<a href="' . $video_url . '" class="thumbnail">' .
+//                '<img src="' . $video_pic . '" alt="' . $video_name . '">' .
+//                '</a>' .
+//                '<a href="' . $video_url . '"><lable id="title" > <font size="5">' . $video_name . '</font></lable></a>' .
+//                '</div>';
+//        }
+//        echo '</div>';
+//    }
+//    ?>
 
 
 </div>
@@ -128,7 +135,8 @@
 
                     <div class="form-group">
                         <label style="vertical-align: inherit;">密 码:</label>
-                        <input type="password" name="password1_pro" id="password1_pro" placeholder="密码">
+                        <input type="password" name="password1_pro" id="password1_pro" placeholder="密码"
+                               value="<?php echo $res['password'] ?>">
                     </div>
 
                     <div class="form-group">
@@ -253,10 +261,3 @@
         })
     }
 </script>
-<?php
-//if ($_SERVER['HTTP_REFERER'] == "") {
-//    echo "<script>confirm('本系统不允许从地址栏访问');</script>";
-//    echo "<script>location.href= \"index.php\";</script>";
-//    exit();
-//}
-//?>
