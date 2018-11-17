@@ -40,6 +40,7 @@
         </form>
         <form action="" method="post" enctype="multipart/form-data">
             <a href="#" data-toggle="modal" data-target="#myModal">还没有NeuVideo账号？注册一个吧！</a>
+<!--            注册模态框-->
             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                  aria-hidden="true">
                 <div class="modal-dialog">
@@ -49,12 +50,12 @@
                             <h4 class="modal-title" id="myModalLabel">Register</h4>
                         </div>
                         <div class="modal-body">
-                            <div class="alert alert-warning" id="tooltip">
-                                <a href="#" class="close" data-dismiss="alert">
-                                    &times;
-                                </a>
-                                <strong>警告！</strong>您两次输入的密码不一致
-                            </div>
+<!--                            <div class="alert alert-warning" id="tooltip">-->
+<!--                                <a href="#" class="close" data-dismiss="alert">-->
+<!--                                    &times;-->
+<!--                                </a>-->
+<!--                                <strong>警告！</strong>您两次输入的密码不一致-->
+<!--                            </div>-->
                             <label style="vertical-align: inherit;">用 户 名:</label>
                             <input type="text" name="uname" id="uname" placeholder="用户名">
                             <label style="vertical-align: inherit;">密 码:</label>

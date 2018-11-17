@@ -1,6 +1,4 @@
 $('#myModal').on('hide.bs.modal', function () {
-    // 当前页 url
-    // 当前页面对应 Action
     $(this).removeData('bs.modal');
     let toopit = $('#tooltip');
     toopit.css("display", "none");

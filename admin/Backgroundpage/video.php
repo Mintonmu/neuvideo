@@ -90,13 +90,13 @@
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
-                    <li class="active"><a href="users.php">用户</a></li>
-                    <li><a href="roles.php">管理员</a></li>
+                    <li class="nav-header"><i class="icon-wrench"></i> 用户和管理员</li>
+                    <li><a href="users.php">用户</a></li>
+                    <li class="active"><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
                     <li><a href="comment.php">评论管理</a></li>
-                    <li class="nav-header"><i class="icon-user"></i>信息</li>
+                    <li class="nav-header"><i class="icon-user"></i> 信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
                     <li><a href="../Adminlogout.php">登出</a></li>
                 </ul>
@@ -105,13 +105,71 @@
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>Site Stats
-                        <small>Some statistics...</small>
+                    <h1>视频
+                        <small>视频管理</small>
                     </h1>
                 </div>
-                <div id="placeholder" style="width:80%;height:300px;"></div>
-                <br/>
-                <div id="visits" style="width:80%;height:300px;"></div>
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    require("./getpages.php");
+                    if (!isset($_GET["num"])) {
+                        $_GET['num'] = 1;
+                    }
+                    if (!isset($_GET["size"])) {
+                        $_GET['size'] = 5;
+                    }
+                    $ary = getVideoDate($_GET['num'], $_GET['size']);
+
+                    while ($num = mysqli_fetch_assoc($ary[0])) {
+                        echo '<tr class="list-roles">';
+                        echo "<td >" . $num['vid'] . "</td >";
+                        echo "<td id='" . "videoname_" . $num['vid'] . "'>" . $num['videoname'] . "</td >";
+                        echo '<td>
+                               <div class="btn-group">
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"]  . '\')">设置<span class="caret"></span></a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\''.'adminname_'.$num['adminid'].'\')"><i class="icon-pencil" ></i>编辑</a></li>
+                                                            <li><a href="#"><i class="icon-trash"></i> 删除</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>';
+                        echo "</tr>";
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <ul>
+                        <?php
+                        if (intval($_GET['num']) == 1) {
+                            echo "<li><a href=\"roles.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
+
+                        } else {
+                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
+                        }
+                        for ($i = 1; $i <= $ary[1]; $i++) {
+                            echo "<li>" . "<a href=\"roles.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
+                        }
+                        if (intval($_GET['num']) == $ary[2]) {
+                            echo "<li><a href=\"roles.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
+
+                        } else {
+                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
+                        }
+                        ?>
+                    </ul>
+                </div>
+
+
+                <a href="new-role.php" class="btn btn-success">添加管理员</a>
             </div>
         </div>
     </div>

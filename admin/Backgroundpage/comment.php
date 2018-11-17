@@ -14,7 +14,7 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if lte IE 8]>
-    <script src="js/excanvas.min.js"></script><![endif]-->
+    <script src="../assets/js/excanvas.min.js"></script><![endif]-->
     <style type="text/css">
         html, body {
             height: 100%;
@@ -81,19 +81,18 @@
         </div>
     </div>
 </div>
-
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
-                    <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
-                    <li class="active"><a href="users.php">用户</a></li>
-                    <li><a href="roles.php">管理员</a></li>
+                    <li class="nav-header"><i class="icon-wrench"></i> 用户和管理员</li>
+                    <li><a href="users.php">用户</a></li>
+                    <li class="active"><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
                     <li><a href="comment.php">评论管理</a></li>
-                    <li class="nav-header"><i class="icon-user"></i>信息</li>
+                    <li class="nav-header"><i class="icon-user"></i> 信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
                     <li><a href="../Adminlogout.php">登出</a></li>
                 </ul>
@@ -102,11 +101,71 @@
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>Users Stats
-                        <small>User statistics...</small>
+                    <h1>评论
+                        <small>评论管理</small>
                     </h1>
                 </div>
-                <div id="placeholder" style="width:80%;height:300px;"></div>
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Content</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    require("./getpages.php");
+                    if (!isset($_GET["num"])) {
+                        $_GET['num'] = 1;
+                    }
+                    if (!isset($_GET["size"])) {
+                        $_GET['size'] = 5;
+                    }
+                    $ary = getCommentDate($_GET['num'], $_GET['size']);
+
+                    while ($num = mysqli_fetch_assoc($ary[0])) {
+                        echo '<tr class="list-roles">';
+                        echo "<td >" . $num['cid'] . "</td >";
+                        echo "<td id='" . "commentname_" . $num['cid'] . "'>" . $num['content'] . "</td >";
+                        echo '<td>
+                               <div class="btn-group">
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"] . '\')">设置<span class="caret"></span></a>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\'' . 'adminname_' . $num['adminid'] . '\')"><i class="icon-pencil" ></i>编辑</a></li>
+                                                            <li><a href="#"><i class="icon-trash"></i> 删除</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </td>';
+                        echo "</tr>";
+                    }
+                    ?>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <ul>
+                        <?php
+                        if (intval($_GET['num']) == 1) {
+                            echo "<li><a href=\"roles.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
+
+                        } else {
+                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
+                        }
+                        for ($i = 1; $i <= $ary[1]; $i++) {
+                            echo "<li>" . "<a href=\"roles.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
+                        }
+                        if (intval($_GET['num']) == $ary[2]) {
+                            echo "<li><a href=\"roles.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
+
+                        } else {
+                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
+                        }
+                        ?>
+                    </ul>
+                </div>
+
+
+                <a href="new-role.php" class="btn btn-success">添加管理员</a>
             </div>
         </div>
     </div>
@@ -114,12 +173,10 @@
     <hr>
 
     <footer class="well">
-        &copy; Strass - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> -
-        Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+        <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
     </footer>
 
 </div>
-
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/jquery.flot.js"></script>
 <script src="../assets/js/jquery.flot.resize.js"></script>

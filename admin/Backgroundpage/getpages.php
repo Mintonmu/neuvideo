@@ -41,3 +41,29 @@ function getRolesDate($pageNum, $pageSize)
 
     return array($rs, intval($res['number'] / $pageSize) + 1);
 }
+
+function getVideoDate($pageNum, $pageSize)
+{
+    $p = connect();
+    $sql = "select * from videos order by `vid` desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+    $sql1 = 'select count(*) as number from videos';
+
+    $rs = mysqli_query($p, $sql);
+    $c = mysqli_query($p, $sql1);
+
+    $res = mysqli_fetch_assoc($c);
+    return array($rs, intval($res['number'] / $pageSize) + 1);
+}
+
+function getCommentDate($pageNum, $pageSize)
+{
+    $p = connect();
+    $sql = "select * from comments order by `cid` desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+    $sql1 = 'select count(*) as number from comments';
+
+    $rs = mysqli_query($p, $sql);
+    $c = mysqli_query($p, $sql1);
+
+    $res = mysqli_fetch_assoc($c);
+    return array($rs, intval($res['number'] / $pageSize) + 1);
+}
