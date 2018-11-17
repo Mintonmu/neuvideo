@@ -121,79 +121,138 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label style="vertical-align: inherit;">用 户 名:</label>
-                        <input type="text" name="uname" id="uname" placeholder="用户名"
+                        <input type="text" name="uname_pro" id="uname_pro" placeholder="用户名"
                                value="<?php echo $res['uname'] ?>">
+                        <input hidden id="uid" value="<?php echo $res['uid'] ?>"/>
                     </div>
 
                     <div class="form-group">
                         <label style="vertical-align: inherit;">密 码:</label>
-                        <input type="password" name="password1" id="password1" placeholder="密码">
+                        <input type="password" name="password1_pro" id="password1_pro" placeholder="密码">
                     </div>
 
                     <div class="form-group">
                         <label style="vertical-align: inherit;">性 别:</label>
                         <br>
-                        <input type="radio" name="gender" value="0" <?php if ($res['gender'] == '0') echo 'checked' ?>>男
+                        <input type="radio" name="gender_pro"
+                               value="0" <?php if ($res['gender'] == '0') echo 'checked' ?>>男
                         &nbsp;&nbsp;
-                        <input type="radio" name="gender" value="1"<?php if ($res['gender'] == '1') echo 'checked' ?>>女
+                        <input type="radio" name="gender_pro"
+                               value="1"<?php if ($res['gender'] == '1') echo 'checked' ?>>女
                         <br>
                     </div>
 
                     <div class="form-group">
                         <label style="vertical-align: inherit;">生 日:</label>
                         <br>
-                        <input type="date" name="birthdate" id="birthdate" value="<?php echo $res['birthdate'] ?>">
+                        <input type="date" name="birthdate_pro" id="birthdate_pro"
+                               value="<?php echo $res['birthdate'] ?>">
                     </div>
                     <br>
                     <div class="form-group">
                         <label for="pic">头像</label>
                         <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*"/>
-                        <img id="xmTanImg"  style="height: 20%;width: 50%" src="<?php echo $res['pic'] ?>"/>
+                        <img id="xmTanImg" style="height: 20%;width: 50%" src="<?php echo $res['pic'] ?>"/>
                         <div id="xmTanDiv"></div>
                         <br>
                     </div>
 
                     <div class="form-group">
                         <label style="vertical-align: inherit;">电子邮箱:</label>
-                        <input type="email" name="email" id="email" placeholder="电子邮箱"
+                        <input type="email" name="email_pro" id="email_pro" placeholder="电子邮箱"
                                value="<?php echo $res['email'] ?>">
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary">提交更改</button>
+                    <button type="button" class="btn btn-primary" onclick="modify_f()">提交更改</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
+</form>
 
-    <script type="text/javascript" src="assets/banner.js"></script>
-    <script type="text/javascript">
+<script type="text/javascript" src="assets/banner.js"></script>
+<script type="text/javascript">
 
-        var banner = new FragmentBanner({
-            container: "#banner1",//选择容器 必选
-            imgs: ['index/a1.png', 'index/a2.png', 'index/a3.png', 'index/a4.png', 'index/a5.png'],//图片集合 必选
-            size: {
-                width: 1000,
-                height: 560
-            },//容器的大小 可选
-            //行数与列数 可选
-            grid: {
-                line: 12,
-                list: 14
-            },
-            index: 0,//图片集合的索引位置 可选
-            type: 2,//切换类型 1 ， 2 可选
-            boxTime: 5000,//小方块来回运动的时长 可选
-            fnTime: 10000//banner切换的时长 可选
-        });
-    </script>
+    var banner = new FragmentBanner({
+        container: "#banner1",//选择容器 必选
+        imgs: ['index/a1.png', 'index/a2.png', 'index/a3.png', 'index/a4.png', 'index/a5.png'],//图片集合 必选
+        size: {
+            width: 1000,
+            height: 560
+        },//容器的大小 可选
+        //行数与列数 可选
+        grid: {
+            line: 12,
+            list: 14
+        },
+        index: 0,//图片集合的索引位置 可选
+        type: 2,//切换类型 1 ， 2 可选
+        boxTime: 5000,//小方块来回运动的时长 可选
+        fnTime: 10000//banner切换的时长 可选
+    });
+</script>
 
-    <div style="text-align:center;">
-    </div>
+<div style="text-align:center;">
+</div>
 </body>
 
 </html>
+<script>
+    function modify_f() {
+
+        let username = $('#uname_pro').val();
+        if (username === '') {
+            alert("必须输入用户名");
+            return;
+        }
+        var form = new FormData();
+        let password = $('#password1_pro').val();
+        if (password != '') {
+            form.append("password", password);
+        }
+        let type = $("input[name = 'gender_pro']:checked").val();
+        console.log(type);
+        let birthday = $('#birthdate_pro').val();
+        let email = $('#email_pro').val();
+        let img_file = document.getElementById("xdaTanFileImg");
+        let fileObj = img_file.files[0];
+        if (typeof(fileObj) == "undefined") {
+            console.log("img undefind");
+        } else {
+            form.append("img", fileObj);
+        }
+        form.append("username", username);
+        form.append("type", type);
+        form.append("birthday", birthday);
+        form.append("email", email);
+        form.append("user_pro", 1);
+        console.log("编辑");
+        let uid = $('#uid').val();
+        form.append('uid', uid);
+
+        $.ajax({
+            url: 'admin/update.php',
+            type: 'post',
+            data: form,
+            dataType: 'text',
+            async: false,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                console.log(result);
+                alert("修改信息成功");
+                window.location.reload();
+
+            },
+            error: function () {
+                alert("失败");
+                window.location.reload();
+            }
+        })
+    }
+</script>
 <?php
 //if ($_SERVER['HTTP_REFERER'] == "") {
 //    echo "<script>confirm('本系统不允许从地址栏访问');</script>";
