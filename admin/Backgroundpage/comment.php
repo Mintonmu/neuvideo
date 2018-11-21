@@ -165,7 +165,7 @@
                 </div>
 
 
-                <a href="new-role.php" class="btn btn-success">添加管理员</a>
+                <a href="new-role.php" class="btn btn-success">添加评论</a>
             </div>
         </div>
     </div>

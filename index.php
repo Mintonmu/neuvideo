@@ -38,24 +38,25 @@
             <input name="password" type="password" id="password" placeholder="密码">
             <input value="登录" name="submit" style="width:100%;" type="submit">
         </form>
-        <form action="" method="post" enctype="multipart/form-data">
-            <a href="#" data-toggle="modal" data-target="#myModal">还没有NeuVideo账号？注册一个吧！</a>
-<!--            注册模态框-->
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Register</h4>
-                        </div>
-                        <div class="modal-body">
-<!--                            <div class="alert alert-warning" id="tooltip">-->
-<!--                                <a href="#" class="close" data-dismiss="alert">-->
-<!--                                    &times;-->
-<!--                                </a>-->
-<!--                                <strong>警告！</strong>您两次输入的密码不一致-->
-<!--                            </div>-->
+
+        <a href="#" data-toggle="modal" data-target="#myModal">还没有NeuVideo账号？注册一个吧！</a>
+        <!--            注册模态框-->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Register</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!--                            <div class="alert alert-warning" id="tooltip">-->
+                        <!--                                <a href="#" class="close" data-dismiss="alert">-->
+                        <!--                                    &times;-->
+                        <!--                                </a>-->
+                        <!--                                <strong>警告！</strong>您两次输入的密码不一致-->
+                        <!--                            </div>-->
+                        <form action="" method="post" enctype="multipart/form-data">
                             <label style="vertical-align: inherit;">用 户 名:</label>
                             <input type="text" name="uname" id="uname" placeholder="用户名">
                             <label style="vertical-align: inherit;">密 码:</label>
@@ -82,15 +83,17 @@
                             <label style="vertical-align: inherit;">电子邮箱:</label>
                             <input type="email" name="email" id="email" placeholder="电子邮箱">
 
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary" onclick="registerin()">提交更改</button>
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal -->
-            </div>
-        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="registerin()">提交更改</button>
+                    </div>
+
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
     </div>
     <div class="copyright">HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</div>
 </div>

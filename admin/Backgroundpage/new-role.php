@@ -44,7 +44,6 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户<b
                             class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-user.php">添加用户</a></li>
                             <li class="divider"></li>
                             <li><a href="users.php">用户管理</a></li>
                         </ul>
@@ -133,6 +132,9 @@
     </footer>
 </div>
 
+<script>
+
+</script>
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 </body>

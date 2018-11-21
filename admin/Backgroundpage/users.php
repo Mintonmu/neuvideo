@@ -44,7 +44,6 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户<b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-user.php">添加用户</a></li>
                             <li class="divider"></li>
                             <li><a href="users.php">用户管理</a></li>
                         </ul>
@@ -124,6 +123,7 @@
                     while ($num = mysqli_fetch_assoc($ary[0])) {
                         echo '<tr class="list-users">';
                         echo "<td>" . $num['uid'] . "</td >";
+                        echo "<input  type=\"hidden\" id='userid' value=" . $num['uid'] . " />";
                         echo "<td>" . $num['uname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
@@ -131,7 +131,7 @@
                                                                     class="caret"></span></a>
                                                         <ul class="dropdown-menu">
                                                             <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
-                                                            <li><a href="#"><i class="icon-trash"></i> 删除</a></li>
+                                                            <li><a href="#" onclick="del_user()"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>';
@@ -172,7 +172,6 @@
                         ?>
                     </ul>
                 </div>
-                <a href="new-user.php" class="btn btn-success">新用户</a>
             </div>
         </div>
     </div>
@@ -185,67 +184,90 @@
                     <h4 class="modal-title" id="myModalLabel">Register</h4>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-warning" id="tooltip">
-                        <a href="#" class="close" data-dismiss="alert">
-                            &times;
-                        </a>
-                        <strong>警告！</strong>您两次输入的密码不一致
-                    </div>
-                    <label style="vertical-align: inherit;">用 户 名:</label>
-                    <input type="text" name="uname" id="uname" placeholder="用户名">
-                    <label style="vertical-align: inherit;">密 码:</label>
-                    <input type="password" name="password1" id="password1" placeholder="密码">
-                    <label style="vertical-align: inherit;">确认密码:</label>
-                    <input type="password" name="repassword" id="repassword" placeholder="密码">
-                    <label style="vertical-align: inherit;">性 别:</label>
-                    <br>
-                    <input type="radio" name="gender" value="0" checked>男
-                    &nbsp;
-                    <input type="radio" name="gender" value="1">女
-                    <br>
-                    <label style="vertical-align: inherit;">生 日:</label>
-                    <br>
-                    <input type="date" name="birthdate" id="birthdate">
-                    <br>
-                    <label>上传头像:</label>
-                    <br>
-                    <span class="btn btn-success fileinput-button">
+                        <label style="vertical-align: inherit;">用 户 名:</label>
+                        <input type="text" name="uname" id="uname" placeholder="用户名">
+                        <label style="vertical-align: inherit;">密 码:</label>
+                        <input type="password" name="password1" id="password1" placeholder="密码">
+                        <label style="vertical-align: inherit;">确认密码:</label>
+                        <input type="password" name="repassword" id="repassword" placeholder="密码">
+                        <label style="vertical-align: inherit;">性 别:</label>
+                        <br>
+                        <input type="radio" name="gender" value="0" checked>男
+                        &nbsp;
+                        <input type="radio" name="gender" value="1">女
+                        <br>
+                        <label style="vertical-align: inherit;">生 日:</label>
+                        <br>
+                        <input type="date" name="birthdate" id="birthdate">
+                        <br>
+                        <label>上传头像:</label>
+                        <br>
+                        <span class="btn btn-success fileinput-button">
                                 <input type="file" name="pic" id="ipc" accept="image/gif,image/png,image/jpeg">
                             </span>
-                    <br>
-                    <label style="vertical-align: inherit;">电子邮箱:</label>
-                    <input type="email" name="email" id="email" placeholder="电子邮箱">
+                        <br>
+                        <label style="vertical-align: inherit;">电子邮箱:</label>
+                        <input type="email" name="email" id="email" placeholder="电子邮箱">
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="registerin()">提交更改</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="registerin()">提交更改</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+        <hr>
+        <footer class="well">
+            <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
+        </footer>
     </div>
-    <hr>
-    <footer class="well">
-        <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
-    </footer>
-</div>
-<script src="../assets/js/jquery.js"></script>
-<script src="../assets/js/bootstrap.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('.dropdown-menu li a').hover(
-            function () {
-                $(this).children('i').addClass('icon-white');
-            },
-            function () {
-                $(this).children('i').removeClass('icon-white');
+    <script src="../assets/js/jquery.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script>
+        function del_user() {
+            let uid = $("#userid").val();
+            let data = {
+                "userid": uid
+            };
+            //console.log(uid);
+            $.ajax({
+                url: "../update.php",
+                data: data,
+                type: 'post',
+                dataType: 'text',
+
+                success: function (result) {
+                    console.log(result);
+                    confirm("是否删除该用户？");
+                    window.location.reload();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                    alert("失败");
+                    window.location.reload();
+                }
             });
 
-        if ($(window).width() > 760) {
-            $('tr.list-users td div ul').addClass('pull-right');
         }
-    });
-</script>
+
+        $(document).ready(function () {
+            $('.dropdown-menu li a').hover(
+                function () {
+                    $(this).children('i').addClass('icon-white');
+                },
+                function () {
+                    $(this).children('i').removeClass('icon-white');
+                });
+
+            if ($(window).width() > 760) {
+                $('tr.list-users td div ul').addClass('pull-right');
+            }
+        });
+
+
+    </script>
 </body>
 <style>
     html, body {

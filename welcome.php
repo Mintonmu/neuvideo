@@ -1,13 +1,12 @@
 <!DOCTYPE>
 <html>
 <?php
-if ($_SERVER['HTTP_REFERER'] == "") {
-    echo "<script>confirm('本系统不允许从地址栏访问');</script>";
-    echo "<script>location.href= \"index.php\";</script>";
-    exit();
-}
-?>
-
+//if ($_SERVER['HTTP_REFERER'] == "") {
+//    echo "<script>confirm('本系统不允许从地址栏访问');</script>";
+//    echo "<script>location.href= \"index.php\";</script>";
+//    exit();
+//}
+//?>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Neu视频</title>
@@ -35,9 +34,11 @@ if ($_SERVER['HTTP_REFERER'] == "") {
 
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
     <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="#">Neu视频网站</a>
-        </li>
+        <div class="nav-header">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Neu视频网站</a>
+            </li>
+        </div>
         <li class="nav-item">
             <a class="nav-link" href="#">首页</a>
         </li>
@@ -55,12 +56,11 @@ if ($_SERVER['HTTP_REFERER'] == "") {
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-        <div class="dropdown" style="left: 100%">
+        <div class="dropdown pull-right" style="left: 100%">
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                 <?php if (!isset($_SESSION)) {
                     session_start();
                 }
-
                 $c = $d->executeSql("select * from users where uname=" . $_SESSION["username"]);
                 $res = mysqli_fetch_assoc($c);
                 echo $_SESSION["username"];
@@ -75,7 +75,6 @@ if ($_SERVER['HTTP_REFERER'] == "") {
     </ul>
 </nav>
 
-
 <div class="banner" id="banner1" style="margin: 40px auto;">
     <div class="banner-view"></div>
     <div class="banner-btn"></div>
@@ -83,54 +82,55 @@ if ($_SERVER['HTTP_REFERER'] == "") {
     <div class="banner-progres"></div>
 </div>
 <div class="container">
-<!--    --><?php
-//    $r = $d->executeSql("select * from videotype");
-//    while ($row = mysqli_fetch_assoc($r)) {
-//        echo '<div align="center">
-//        <h1 style="color: #F0F8FF">' . $row['typename'] . '</h1>
-//        </div>';
-//        echo '<div class="row">';
-//        $rr = $d->executeSql("SELECT * FROM (
-//                                SELECT *, ABS(NOW() - uploaddate) AS diffTime
-//                                FROM videos
-//                                ORDER BY diffTime ASC
-//                                ) videos where tid = " . $row['tid'] . " LIMIT 3");
-//        while ($row2 = mysqli_fetch_assoc($rr)) {
-//            $video_id = $row2['vid'];
-//            $video_name = $row2['videoname'];
-//            $video_url = 'videodetail.php?vid=' . $video_id;
-//            $video_pic = 'admin/videoimage/' . $row2['pic'];
-//            echo '<div class="col-xs-6 col-md-4" align="center">' .
-//
-//                '<a href="' . $video_url . '" class="thumbnail">' .
-//                '<img src="' . $video_pic . '" alt="' . $video_name . '">' .
-//                '</a>' .
-//                '<a href="' . $video_url . '"><lable id="title" > <font size="5">' . $video_name . '</font></lable></a>' .
-//                '</div>';
-//        }
-//        echo '</div>';
-//    }
-//    ?>
+    <!--    --><?php
+    //    $r = $d->executeSql("select * from videotype");
+    //    while ($row = mysqli_fetch_assoc($r)) {
+    //        echo '<div align="center">
+    //        <h1 style="color: #F0F8FF">' . $row['typename'] . '</h1>
+    //        </div>';
+    //        echo '<div class="row">';
+    //        $rr = $d->executeSql("SELECT * FROM (
+    //                                SELECT *, ABS(NOW() - uploaddate) AS diffTime
+    //                                FROM videos
+    //                                ORDER BY diffTime ASC
+    //                                ) videos where tid = " . $row['tid'] . " LIMIT 3");
+    //        while ($row2 = mysqli_fetch_assoc($rr)) {
+    //            $video_id = $row2['vid'];
+    //            $video_name = $row2['videoname'];
+    //            $video_url = 'videodetail.php?vid=' . $video_id;
+    //            $video_pic = 'admin/videoimage/' . $row2['pic'];
+    //            echo '<div class="col-xs-6 col-md-4" align="center">' .
+    //
+    //                '<a href="' . $video_url . '" class="thumbnail">' .
+    //                '<img src="' . $video_pic . '" alt="' . $video_name . '">' .
+    //                '</a>' .
+    //                '<a href="' . $video_url . '"><lable id="title" > <font size="5">' . $video_name . '</font></lable></a>' .
+    //                '</div>';
+    //        }
+    //        echo '</div>';
+    //    }
+    //    ?>
 
 
 </div>
 
 
-<form action="" method="post" enctype="multipart/form-data">
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">我的信息</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">我的信息</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <form action="" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label style="vertical-align: inherit;">用 户 名:</label>
                         <input type="text" name="uname_pro" id="uname_pro" placeholder="用户名"
                                value="<?php echo $res['uname'] ?>">
-                        <input hidden id="uid" value="<?php echo $res['uid'] ?>"/>
+                        <input hidden id="uid" name="uid" value="<?php echo $res['uid'] ?>"/>
                     </div>
 
                     <div class="form-group">
@@ -170,15 +170,17 @@ if ($_SERVER['HTTP_REFERER'] == "") {
                         <input type="email" name="email_pro" id="email_pro" placeholder="电子邮箱"
                                value="<?php echo $res['email'] ?>">
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="modify_f()">提交更改</button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
-</form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="modify_f()">提交更改</button>
+            </div>
+
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
 
 <script type="text/javascript" src="assets/banner.js"></script>
 <script type="text/javascript">
@@ -208,6 +210,8 @@ if ($_SERVER['HTTP_REFERER'] == "") {
 
 </html>
 <script>
+
+
     function modify_f() {
 
         let username = $('#uname_pro').val();
@@ -215,7 +219,7 @@ if ($_SERVER['HTTP_REFERER'] == "") {
             alert("必须输入用户名");
             return;
         }
-        var form = new FormData();
+        let form = new FormData();
         let password = $('#password1_pro').val();
         if (password != '') {
             form.append("password", password);
@@ -254,10 +258,46 @@ if ($_SERVER['HTTP_REFERER'] == "") {
                 window.location.reload();
 
             },
-            error: function () {
+            error: function (data) {
+                console.log(data);
                 alert("失败");
                 window.location.reload();
             }
         })
+    }
+
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xmTanImg").setAttribute("disabled", "disabled");
+    }
+
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        var file = obj.files[0];
+        console.log(obj);
+        console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+        var reader = new FileReader();
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读取....");
+            var img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+        }
+        reader.readAsDataURL(file)
     }
 </script>

@@ -10,7 +10,7 @@ $link = connect();
 $adminname = $_POST["adminname"];
 $password = $_POST["password"];
 $adminid = $_POST["adminid"];
-
+//修改管理员
 $sql = "select * from admins where adminname = '$adminname' and password ='$password'";
 $rs = mysqli_query($link, $sql);
 $num = mysqli_num_rows($rs);

@@ -51,7 +51,6 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户 <b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-user.php">添加用户</a></li>
                             <li class="divider"></li>
                             <li><a href="users.php">用户管理</a></li>
                         </ul>
@@ -134,9 +133,9 @@
                         echo "<td id='" . "videoname_" . $num['vid'] . "'>" . $num['videoname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"]  . '\')">设置<span class="caret"></span></a>
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"] . '\')">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\''.'adminname_'.$num['adminid'].'\')"><i class="icon-pencil" ></i>编辑</a></li>
+                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\'' . 'adminname_' . $num['adminid'] . '\')"><i class="icon-pencil" ></i>编辑</a></li>
                                                             <li><a href="#"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
@@ -169,7 +168,7 @@
                 </div>
 
 
-                <a href="new-role.php" class="btn btn-success">添加管理员</a>
+                <a href="new-role.php" class="btn btn-success">添加视频</a>
             </div>
         </div>
     </div>

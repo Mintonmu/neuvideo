@@ -7,10 +7,29 @@
  */
 
 include '../system/dbConn.php';
-$p = new DataBase();
+$p = new DBconnect();
 date_default_timezone_set("Asia/Shanghai");
 
+//删除用户
+if (isset($_POST["userid"])) {
+    $uid = $_POST["userid"];
+    $sql1 = "delete from users where uid=$uid ";
+    echo $sql1;
+    $p->executeSql($sql1);
+    echo "6";
+    return;
 
+}
+//删除管理员
+if (isset($_POST["adminid"])) {
+    $aid = $_POST["adminid"];
+    $sql1 = "delete from admins where adminid=$aid ";
+    echo $sql1;
+    $p->executeSql($sql1);
+    echo "7";
+    return;
+
+}
 //更新用户数据
 if (isset($_POST['user_pro'])) {
     $uname = $_POST['username'];
@@ -63,4 +82,3 @@ if (isset($_POST['user_pro'])) {
     }
 }
 
-//

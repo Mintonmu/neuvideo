@@ -50,7 +50,6 @@
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户 <b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="new-user.php">添加新用户</a></li>
                             <li class="divider"></li>
                             <li><a href="users.php">管理用户</a></li>
                         </ul>
