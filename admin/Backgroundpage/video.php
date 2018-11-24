@@ -133,7 +133,7 @@
                         echo "<td id='" . "videoname_" . $num['vid'] . "'>" . $num['videoname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#")">设置<span class="caret"></span></a>
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#"">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
                                                             <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
                                                             <li><a href="../update.php?vid=' . $num['vid'] . '"><i class="icon-trash"></i> 删除</a></li>
@@ -172,6 +172,11 @@
         </div>
     </div>
 
+    <?php
+    $p = new DBconnect();
+    $Sql = "select * from videotype";
+    $result = $p->executeSql($Sql);
+    ?>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -181,45 +186,51 @@
                     <h4 class="modal-title" id="myModalLabel">Register</h4>
                 </div>
                 <div class="modal-body">
-                    <label style="vertical-align: inherit;">视频名称:</label>
-                    <input type="text" name="uname" id="uname" value="<?php $num['videoname']; ?>">
-                    <div class="control-group">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <label style="vertical-align: inherit;">视频名称：</label>
+                        <input type="text" name="uname" id="uname" placeholder="用户名">
                         <label class="control-label" for="name">视频类型</label>
                         <div class="controls">
-                            <select class="form-control" id="videotype">
+                            <select class="form-control" name="videotype">
                                 <?php
-                                //todo:
+
+
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     ?>
-                                    <option value="<?php echo $row["tid"]; ?>">
+                                    <option value="<?php echo $row["tid"]; ?>" selected>
                                         <?php echo $row["typename"]; ?>
                                     </option>
                                     <?php
                                 } ?>
                             </select>
-                        </div>
-                    </div>
-                    <label style="vertical-align: inherit;">生 日:</label>
-                    <br>
-                    <input type="date" name="birthdate" id="birthdate">
-                    <br>
-                    <label>上传头像:</label>
-                    <br>
-                    <span class="btn btn-success fileinput-button">
-                                <input type="file" name="pic" id="ipc" accept="image/gif,image/png,image/jpeg">
-                            </span>
-                    <br>
-                    <label style="vertical-align: inherit;">电子邮箱:</label>
-                    <input type="email" name="email" id="email" placeholder="电子邮箱">
 
+                        </div>
+                        <label class="control-label" for="name">视频简介</label>
+                        <div class="controls">
+                                <textarea name="description" rows="4" cols="30" style="line-height: 1.5;height: 100px;"
+                                          placeholder="请输入视频相关简介....."></textarea>
+                        </div>
+                        <label>上传头像:</label>
+                        <span class="btn btn-success fileinput-button">
+                                <span>上传</span>
+                                <input type="file" name="pic" id="ipc" onchange="xmTanUploadImg(this);"
+                                       accept="image/gif,image/png,image/jpeg">
+                            </span>
+                        <label class="control-label" for="email">下载地址</label>
+                        <div class="controls">
+                            <input type="text" class="input-xlarge" name="address"/>
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <button type="button" class="btn btn-primary" onclick="registerin()">提交更改</button>
                 </div>
+
+                </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
+
     <hr>
 
     <footer class="well">

@@ -67,3 +67,5 @@ function getCommentDate($pageNum, $pageSize)
     $res = mysqli_fetch_assoc($c);
     return array($rs, intval($res['number'] / $pageSize) + 1);
 }
+
+

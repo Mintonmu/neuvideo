@@ -10,6 +10,8 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -99,35 +101,29 @@
                         <small>添加视频</small>
                     </h1>
                 </div>
-                <form action="" class="form-horizontal" enctype="multipart/form-data">
+                <form action="../update.php" method="post" enctype="multipart/form-data">
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="name">视频名</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="name"/>
+                                <input type="text" class="input-xlarge" name="videoname"/>
                             </div>
                         </div>
 
                         <?php
-
                         include("../../system/dbConn.php");
                         $p = new DBconnect();
-                        $adminname = $_SESSION["adminname"];
                         $Sql = "select * from videotype";
-                        $sql1 = "select * from admins where adminname ='$adminname'";
-                        $res = $p->executeSql($sql1);
-                        $num = mysqli_fetch_assoc($res);
-                        $_SESSION['adminid'] = $num['adminid'];
                         $result = $p->executeSql($Sql);
                         ?>
                         <div class="control-group">
                             <label class="control-label" for="name">视频类型</label>
                             <div class="controls">
-                                <select class="form-control" id="videotype">
+                                <select class="form-control" name="videotype">
                                     <?php
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         ?>
-                                        <option value="<?php echo $row["tid"]; ?>">
+                                        <option  value="<?php echo $row["tid"]; ?>">
                                             <?php echo $row["typename"]; ?>
                                         </option>
                                         <?php
@@ -140,7 +136,7 @@
                         <div class="control-group">
                             <label class="control-label" for="name">视频简介</label>
                             <div class="controls">
-                                <textarea id="description" rows="4" cols="30" style="line-height: 1.5;height: 100px;"
+                                <textarea name="description" rows="4" cols="30" style="line-height: 1.5;height: 100px;"
                                           placeholder="请输入视频相关简介....."></textarea>
                             </div>
                         </div>
@@ -157,12 +153,12 @@
                         <div class="control-group">
                             <label class="control-label" for="email">下载地址</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="address"/>
+                                <input type="text" class="input-xlarge" name="address"/>
                             </div>
                         </div>
 
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-success btn-large" onclick="subvideo();"
+                            <input type="submit" class="btn btn-success btn-large"
                                    value="Save Video"/> <a class="btn"
                                                            href="users.php">取消</a>
                         </div>
@@ -176,41 +172,7 @@
     </footer>
 
 </div>
-<script>
-    function subvideo() {
-
-        let name = $("#name").val();
-        let type = $("#videotype option:selected").val();
-        let description = $("#description").val();
-        let address = $("#address").val();
-        let img_file = document.getElementById("ipc");
-        let fileObj = img_file.files[0];
-        let data = {
-            'name': name,
-            'type': type,
-            'description': description,
-            'address': address,
-            'fileobj': fileObj,
-        };
-
-        $.ajax({
-            url: "../update.php",
-            type: "post",
-            data: data,
-            dataType: 'text',
-            success: function (result) {
-                console.log(result);
-                location.href = "video.php";
-
-            },
-            error: function (result) {
-            }
-        })
 
 
-    }
-</script>
-<script src="../assets/js/jquery.js"></script>
-<script src="../assets/js/bootstrap.min.js"></script>
 </body>
 </html>

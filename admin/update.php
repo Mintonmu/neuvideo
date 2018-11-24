@@ -9,7 +9,7 @@
 include '../system/dbConn.php';
 $p = new DBconnect();
 date_default_timezone_set("Asia/Shanghai");
-
+session_start();
 //更新视频数据
 
 
@@ -41,9 +41,10 @@ if (isset($_POST["adminname"]) && isset($_POST["adminpassword"])) {
     return;
 }
 //添加视频
-//TODO:
 if (isset($_POST["videoname"])) {
+    echo "qqqqqq\n";
     $uploadadmin = $_SESSION["adminid"];
+    echo $uploadadmin;
     $videoname = $_POST["videoname"];
     $videotype = $_POST["videotype"];
     $description = $_POST["description"];
@@ -55,9 +56,8 @@ if (isset($_POST["videoname"])) {
         move_uploaded_file($image["tmp_name"], $filename);
     }
     $sql = "insert into videos values (null,'$videoname','$videotype','$filename','$description',now(),'$uploadadmin',0,0,'$address')";
-    echo $sql;
-    $p->insert("videos", array("videoname", "tid", "pic", "intro", "uploaddate", "uploadadmin", "hittimes", "downtimes", "address"), array($videoname, $videotype, $filename, $description, now(), $uploadname, 0, 0, $address));
-    echo "9";
+    $p->executeSql($sql);
+    header("location:./Backgroundpage/video.php");
     return;
 }
 //删除用户

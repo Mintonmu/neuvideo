@@ -127,7 +127,7 @@
                         echo "<td>" . $num['uname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">设置<span
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="trandata(\'' . $num["uname"] . '\',\'' . $num["password"] . '\',\'' . $num["uid"] . '\',\'' . $num["gender"] . '\',\'' . $num["birthdate"] . '\',\'' . $num["pic"] . '\',\'' . $num["email"] . '\');">设置<span
                                                                     class="caret"></span></a>
                                                         <ul class="dropdown-menu">
                                                             <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
@@ -189,52 +189,47 @@
                     <form action="" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label style="vertical-align: inherit;">用 户 名:</label>
-                            <input type="text" name="uname_pro" id="uname_pro" placeholder="用户名"
-                                   value="<?php echo $res['uname'] ?>">
-                            <input type="hidden" id="uid" name="uid" value="<?php echo $res['uid'] ?>"/>
+                            <input type="text" name="uname_pro" id="uname_pro" placeholder="用户名">
+                            <input type="hidden" id="uid" name="uid""/>
                         </div>
 
                         <div class="form-group">
                             <label style="vertical-align: inherit;">密 码:</label>
-                            <input type="password" name="password1_pro" id="password1_pro" placeholder="密码"
-                                   value="<?php echo $res['password'] ?>">
+                            <input type="password" name="password1_pro" id="password1_pro" placeholder="密码">
                         </div>
 
                         <div class="form-group">
                             <label style="vertical-align: inherit;">性 别:</label>
                             <br>
-                            <input type="radio" name="gender_pro"
-                                   value="0" <?php if ($res['gender'] == '0') echo 'checked' ?>>男
+                            <input type="radio" name="gender_pro" value="0">男
                             &nbsp;&nbsp;
-                            <input type="radio" name="gender_pro"
-                                   value="1"<?php if ($res['gender'] == '1') echo 'checked' ?>>女
+                            <input type="radio" name="gender_pro" value="1">女
                             <br>
                         </div>
 
                         <div class="form-group">
                             <label style="vertical-align: inherit;">生 日:</label>
                             <br>
-                            <input type="date" name="birthdate_pro" id="birthdate_pro"
-                                   value="<?php echo $res['birthdate'] ?>">
+                            <input type="date" name="birthdate_pro" id="birthdate_pro">
                         </div>
                         <br>
                         <div class="form-group">
                             <label for="pic">头像</label>
-                            <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*"/>
-                            <img id="xmTanImg" style="height: 20%;width: 50%" src="<?php echo $res['pic'] ?>"/>
+                            <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)"
+                                   accept="image/*"/>
+                            <img id="xmTanImg" style="height: 20%;width: 50%" src=""/>
                             <div id="xmTanDiv"></div>
                             <br>
                         </div>
 
                         <div class="form-group">
                             <label style="vertical-align: inherit;">电子邮箱:</label>
-                            <input type="email" name="email_pro" id="email_pro" placeholder="电子邮箱"
-                                   value="<?php echo $res['email'] ?>">
+                            <input type="email" name="email_pro" id="email_pro" placeholder="电子邮箱">
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="modify_f()">提交更改</button>
+                    <button type="button" class="btn btn-primary" onclick="modify_submit()">提交更改</button>
                 </div>
 
                 </form>
@@ -249,6 +244,67 @@
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
+
+
+    let trandata = function (uname, password, uid, gender, birthdate, pic, email) {
+        $("#uname_pro").val(uname);
+        $("#password1_pro").val(password);
+        $("#uid").val(uid);
+        $("#birthdate_pro").val(birthdate);
+        $("#email_pro").val(email);
+        $("#xmTanImg").attr("src", "../" + "." + pic);
+        if (gender == 0) {
+            $("input[name = 'gender_pro']").eq(0).attr("checked", "checked");
+            $("input[name = 'gender_pro']").eq(1).removeAttr("checked");
+            $("input[name = 'gender_pro']").eq(0).click();
+        } else {
+            $("input[name = 'gender_pro']").eq(1).attr("checked", "checked");
+            $("input[name = 'gender_pro']").eq(0).removeAttr("checked");
+            $("input[name = 'gender_pro']").eq(1).click();
+        }
+    };
+    let modify_submit = function () {
+
+        let uname_pro = $("#uname_pro").val();
+        let password_pro = $("#password1_pro").val();
+        let uid = $("#uid").val();
+        let gender = $("input[name = 'gender_pro']:checked").val();
+        let birthdate = $("#birthdate_pro").val();
+        let img_file = document.getElementById("xdaTanFileImg");
+        let fileObj = img_file.files[0];
+        console.log(uname_pro);
+
+        console.log(fileObj);
+        let data = {
+            "uname_pro": uname_pro,
+            "password_pro": password_pro,
+            "uid": uid,
+            "gender": gender,
+            "birthdate": birthdate,
+            "fileObj": fileObj,
+        };
+        $.ajax({
+            url: '../update.php',
+            type: 'post',
+            data: data,
+            dataType: 'text',
+            success: function (result) {
+                $("#myModal").modal('hide');
+                console.log(result);
+                if (result == "success") {
+                    $("#adminname").val(adminname);
+                    $("#password").val(password);
+                    alert("您已经修改成功");
+                    location.reload(true);
+                }
+            },
+            error: function (msg) {
+                alert(msg);
+            }
+        })
+
+    };
+
     function del_user() {
 
         if (confirm("是否删除该用户？")) {
@@ -346,6 +402,7 @@
             }
         })
     }
+
     //判断浏览器是否支持FileReader接口
     if (typeof FileReader == 'undefined') {
         document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";

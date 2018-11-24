@@ -21,6 +21,7 @@
     <![endif]-->
 </head>
 <body>
+
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container-fluid">
@@ -31,9 +32,12 @@
             </a>
             <a class="brand" href="#">Neu视频后台管理系统</a>
             <div class="btn-group pull-right">
-                <a class="btn" href="my-profile.php"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
+                <a class="btn" href="my-profile.php"><i class="icon-user"></i><?php
+                    require("../../system/dbConn.php");
+                    if (!isset($_SESSION)) {
                         session_start();
                     }
+                    $adminname = $_SESSION["adminname"];
                     echo $_SESSION["adminname"]; ?></a>
                 <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                     <span class="caret"></span>
@@ -110,7 +114,7 @@
                 <div class="span3">
                     <h3>用户数量</h3>
                     <p><a href="users.php" class="badge badge-inverse"><?php
-                            require("../../system/dbConn.php");
+
                             $link = connect();
                             $sql = "select count(*) as number from users";
                             $rs = mysqli_query($link, $sql);
@@ -137,60 +141,19 @@
                 </div>
             </div>
             <br/>
-            <div class="row-fluid">
-                <div class="page-header">
-                    <h1>Pending Users
-                        <small>Approve or Reject</small>
-                    </h1>
-                </div>
-                <table class="table table-bordered">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>E-mail</th>
-                        <th>Phone</th>
-                        <th>City</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="pending-user">
-                        <td>564</td>
-                        <td>John S. Schwab</td>
-                        <td>johnschwab@provider.com</td>
-                        <td>402-xxx-xxxx</td>
-                        <td>Bassett, NE</td>
-                        <td>User</td>
-                        <td><span class="label label-important">Inactive</span></td>
-                        <td><span class="user-actions"><a href="javascript:void(0);"
-                                                          class="label label-success">Approve</a> <a
-                                        href="javascript:void(0);" class="label label-important">Reject</a></span></td>
-                    </tr>
-                    <tr class="pending-user">
-                        <td>565</td>
-                        <td>Juliana M. Sheffield</td>
-                        <td>julianasheffield@provider.com</td>
-                        <td>803-xxx-xxxx</td>
-                        <td>Columbia, SC</td>
-                        <td>User</td>
-                        <td><span class="label label-important">Inactive</span></td>
-                        <td><span class="user-actions"><a href="javascript:void(0);"
-                                                          class="label label-success">Approve</a> <a
-                                        href="javascript:void(0);" class="label label-important">Reject</a></span></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
     <hr>
     <footer class="well">
         <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
     </footer>
+    <?php
+    $sql = "select * from admins where adminname ='$adminname'";
+    $rs = mysqli_query($link, $sql);
+    $now = mysqli_fetch_assoc($rs);
+    $_SESSION["adminid"] = $now['adminid'];
 
+    ?>
 </div>
 
 <script src="../assets/js/jquery.js"></script>
