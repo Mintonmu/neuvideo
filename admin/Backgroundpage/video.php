@@ -133,7 +133,7 @@
                         echo "<td id='" . "videoname_" . $num['vid'] . "'>" . $num['videoname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#"">设置<span class="caret"></span></a>
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="trandata(\'' . $num["videoname"] . '\',\'' . $num["tid"] . '\',\'' . $num["pic"] . '\',\'' . $num["intro"] . '\',\'' . $num["uploadadmin"] . '\',\'' . $num["address"] . '\');">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
                                                             <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
                                                             <li><a href="../update.php?vid=' . $num['vid'] . '"><i class="icon-trash"></i> 删除</a></li>
@@ -188,10 +188,10 @@
                 <div class="modal-body">
                     <form action="" method="post" enctype="multipart/form-data">
                         <label style="vertical-align: inherit;">视频名称：</label>
-                        <input type="text" name="uname" id="uname" placeholder="用户名">
+                        <input type="text" name="videoname_pro" id="videoname_pro">
                         <label class="control-label" for="name">视频类型</label>
                         <div class="controls">
-                            <select class="form-control" name="videotype">
+                            <select class="form-control" name="videotype_pro" id="videotype_pro">
                                 <?php
 
 
@@ -207,23 +207,27 @@
                         </div>
                         <label class="control-label" for="name">视频简介</label>
                         <div class="controls">
-                                <textarea name="description" rows="4" cols="30" style="line-height: 1.5;height: 100px;"
+                                <textarea name="description_pro" id="description_pro" rows="4" cols="30"
+                                          style="line-height: 1.5;height: 100px;"
                                           placeholder="请输入视频相关简介....."></textarea>
                         </div>
-                        <label>上传头像:</label>
-                        <span class="btn btn-success fileinput-button">
-                                <span>上传</span>
-                                <input type="file" name="pic" id="ipc" onchange="xmTanUploadImg(this);"
-                                       accept="image/gif,image/png,image/jpeg">
-                            </span>
+                        <div class="form-group">
+                            <label for="pic">视频海报</label>
+                            <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)"
+                                   accept="image/*"/>
+                            <label>原视频海报</label>
+                            <img id="xmTanImg" style="height: 20%;width: 30%" src=""/>
+                            <div id="xmTanDiv"></div>
+                            <br>
+                        </div>
                         <label class="control-label" for="email">下载地址</label>
                         <div class="controls">
-                            <input type="text" class="input-xlarge" name="address"/>
+                            <input type="text" class="input-xlarge" name="address_pro" id="address_pro"/>
                         </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="registerin()">提交更改</button>
+                    <button type="button" class="btn btn-primary" onclick="modify_submit()">提交更改</button>
                 </div>
 
                 </form>
@@ -244,6 +248,54 @@
 <script src="../assets/js/jquery.flot.resize.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
+    let trandata = function (videoname, tid, pic, intro, uploadamin, address) {
+
+        console.log(videoname);
+        $("#videoname_pro").val(videoname);
+        $("#videotype_pro").val(tid);
+        $("#xmTanImg").attr("src", "../" + pic);
+        $("#description_pro").val(intro);
+        $("#address_pro").val(address);
+
+    };
+    let modify_submit = function () {
+        let videoname_pro = $("#videoname_pro").val();
+        let videotype_pro = $("#videotype_pro option:selected").val();
+        let img_file = document.getElementById("xdaTanFileImg");
+        let fileObj = img_file.files[0];
+        let intro = $("#description_pro").val();
+        let address_pro = $("#address_pro").val();
+
+        let data = {
+            "videoname_pro": videoname_pro,
+            "videotype_pro": videotype_pro,
+            "fileObj": fileObj,
+            "intro": intro,
+            "address_pro": address_pro,
+        };
+
+        $.ajax({
+            url: "../update.php",
+            type: "post",
+            data: data,
+            dataType: 'text',
+            success: function (result) {
+                $("#myModal").modal('hide');
+                console.log(result);
+                if (result == "success") {
+                    $("#adminname").val(adminname);
+                    $("#password").val(password);
+                    alert("您已经修改成功");
+                    location.reload(true);
+                }
+            },
+            error: function (msg) {
+                alert(msg);
+            }
+        })
+
+    };
+
     $(function () {
         var data = [
             {

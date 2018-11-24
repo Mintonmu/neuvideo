@@ -123,7 +123,7 @@
                                     <?php
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         ?>
-                                        <option  value="<?php echo $row["tid"]; ?>">
+                                        <option value="<?php echo $row["tid"]; ?>">
                                             <?php echo $row["typename"]; ?>
                                         </option>
                                         <?php
@@ -136,8 +136,9 @@
                         <div class="control-group">
                             <label class="control-label" for="name">视频简介</label>
                             <div class="controls">
-                                <textarea name="description" rows="4" cols="30" style="line-height: 1.5;height: 100px;"
-                                          placeholder="请输入视频相关简介....."></textarea>
+                                <textarea name="description" id="description" rows="4" cols="30"
+                                          style="line-height: 1.5;height: 100px;"
+                                          placeholder="请输入视频相关简介,字数少于100字....."></textarea>
                             </div>
                         </div>
 
@@ -172,7 +173,19 @@
     </footer>
 
 </div>
+<script>
+    $("#description").on("input propertychange", function () {
+        var $this = $(this),
+            _val = $this.val(),
+            count = "";
+        if (_val.length > 200) {
+            $this.val(_val.substring(0, 200));
+        }
+        count = 100 - $this.val().length;
+        $("#text-count").text(count);
+    });
 
+</script>
 
 </body>
 </html>
