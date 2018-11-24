@@ -10,9 +10,7 @@ $rs = mysqli_query($link, $sql);
 $num = mysqli_num_rows($rs);
 if ($num > 0) {
 
-    if (!isset($_SESSION)) {
-        session_start();
-    }
+    session_start();
     $_SESSION["username"] = $uname;
     echo "success";
     header("location:welcome.php");

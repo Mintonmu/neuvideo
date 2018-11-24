@@ -23,6 +23,41 @@
         }
         return true;
     }
+
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xmTanImg").setAttribute("disabled", "disabled");
+    }
+
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        let file = obj.files[0];
+        console.log(obj);
+        console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+        let reader = new FileReader();
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读s取....");
+            let img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+        }
+        reader.readAsDataURL(file)
+    }
 </script>
 <body>
 
@@ -77,7 +112,8 @@
                             <br>
                             <span class="btn btn-success fileinput-button">
                                 <span>上传</span>
-                                <input type="file" name="pic" id="ipc" accept="image/gif,image/png,image/jpeg">
+                                <input type="file" name="pic" id="ipc" onchange="xmTanUploadImg(this);"
+                                       accept="image/gif,image/png,image/jpeg">
                             </span>
                             <br>
                             <label style="vertical-align: inherit;">电子邮箱:</label>

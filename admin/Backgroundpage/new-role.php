@@ -42,14 +42,14 @@
                 <ul class="nav">
                     <li><a href="welcome.php">主页</a></li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户<b
-                            class="caret"></b></a>
+                                    class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class="divider"></li>
                             <li><a href="users.php">用户管理</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">管理员<b
-                            class="caret"></b></a>
+                                    class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="new-role.php">添加管理员</a></li>
                             <li class="divider"></li>
@@ -91,7 +91,7 @@
                     <li class="nav-header"><i class="icon-user"></i> 信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
                     <li><a href="#">我的设置</a></li>
-                    <li><a href="#">登出</a></li>
+                    <li><a href="../Adminlogout.php">登出</a></li>
                 </ul>
             </div>
         </div>
@@ -102,23 +102,24 @@
                         <small>添加一个新的管理员</small>
                     </h1>
                 </div>
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="../update.php" method="post">
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="role">账号</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="role"/>
+                                <input type="text" class="input-xlarge" name="adminname" id="role"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="password">密码</label>
                             <div class="controls">
-                                <input type="password" class="input-xlarge" id="password"/>
+                                <input type="password" class="input-xlarge" name="adminpassword" id="password"/>
                             </div>
                         </div>
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-success btn-large" value="保存"/> <a class="btn"
-                                                                                                          href="roles.php">取消</a>
+                            <input type="submit" class="btn btn-success btn-large"
+                                   value="添加"/> <a class="btn"
+                                                   href="roles.php">取消</a>
                         </div>
                     </fieldset>
                 </form>

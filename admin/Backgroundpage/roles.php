@@ -127,9 +127,9 @@
                         echo "<td id='" . "adminname_" . $num['adminid'] . "'>" . $num['adminname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"]  . '\')">设置<span class="caret"></span></a>
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"] . '\')">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\''.'adminname_'.$num['adminid'].'\')"><i class="icon-pencil" ></i>编辑</a></li>
+                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\'' . 'adminname_' . $num['adminid'] . '\')"><i class="icon-pencil" ></i>编辑</a></li>
                                                             <li><a href="#" onclick="del_roles()"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
@@ -216,30 +216,33 @@
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
 
-    function del_roles(){
-        let aid = $("#adminid").val();
-        let data = {
-            "adminid": aid
-        };
-        //console.log(uid);
-        $.ajax({
-            url: "../update.php",
-            data: data,
-            type: 'post',
-            dataType: 'text',
+    function del_roles() {
 
-            success: function (result) {
-                console.log(result);
-                confirm("是否删除该管理员？");
-                window.location.reload();
+        if (confirm("是否删除该管理员？")) {
+            let aid = $("#adminid").val();
+            let data = {
+                "adminid": aid
+            };
+            //console.log(uid);
+            $.ajax({
+                url: "../update.php",
+                data: data,
+                type: 'post',
+                dataType: 'text',
 
-            },
-            error: function (data) {
-                console.log(data);
-                alert("失败");
-                window.location.reload();
-            }
-        });
+                success: function (result) {
+                    console.log(result);
+
+                    window.location.reload();
+
+                },
+                error: function (data) {
+                    console.log(data);
+                    alert("失败");
+                    window.location.reload();
+                }
+            });
+        }
     }
 
 

@@ -133,10 +133,10 @@
                         echo "<td id='" . "videoname_" . $num['vid'] . "'>" . $num['videoname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"] . '\')">设置<span class="caret"></span></a>
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#")">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\'' . 'adminname_' . $num['adminid'] . '\')"><i class="icon-pencil" ></i>编辑</a></li>
-                                                            <li><a href="#"><i class="icon-trash"></i> 删除</a></li>
+                                                            <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
+                                                            <li><a href="../update.php?vid=' . $num['vid'] . '"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>';
@@ -165,14 +165,61 @@
                         }
                         ?>
                     </ul>
+
                 </div>
-
-
-                <a href="new-role.php" class="btn btn-success">添加视频</a>
+                <a href="new-video.php" class="btn btn-success">添加视频</a>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Register</h4>
+                </div>
+                <div class="modal-body">
+                    <label style="vertical-align: inherit;">视频名称:</label>
+                    <input type="text" name="uname" id="uname" value="<?php $num['videoname']; ?>">
+                    <div class="control-group">
+                        <label class="control-label" for="name">视频类型</label>
+                        <div class="controls">
+                            <select class="form-control" id="videotype">
+                                <?php
+                                //todo:
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                    <option value="<?php echo $row["tid"]; ?>">
+                                        <?php echo $row["typename"]; ?>
+                                    </option>
+                                    <?php
+                                } ?>
+                            </select>
+                        </div>
+                    </div>
+                    <label style="vertical-align: inherit;">生 日:</label>
+                    <br>
+                    <input type="date" name="birthdate" id="birthdate">
+                    <br>
+                    <label>上传头像:</label>
+                    <br>
+                    <span class="btn btn-success fileinput-button">
+                                <input type="file" name="pic" id="ipc" accept="image/gif,image/png,image/jpeg">
+                            </span>
+                    <br>
+                    <label style="vertical-align: inherit;">电子邮箱:</label>
+                    <input type="email" name="email" id="email" placeholder="电子邮箱">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="registerin()">提交更改</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
     <hr>
 
     <footer class="well">

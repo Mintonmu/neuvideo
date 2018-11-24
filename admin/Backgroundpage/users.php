@@ -35,7 +35,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="my-profile.php">我的信息</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">登出</a></li>
+                    <li><a href="../Adminlogout.php">登出</a></li>
                 </ul>
             </div>
             <div class="nav-collapse">
@@ -175,62 +175,88 @@
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">我的信息</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Register</h4>
                 </div>
                 <div class="modal-body">
-                        <label style="vertical-align: inherit;">用 户 名:</label>
-                        <input type="text" name="uname" id="uname" placeholder="用户名">
-                        <label style="vertical-align: inherit;">密 码:</label>
-                        <input type="password" name="password1" id="password1" placeholder="密码">
-                        <label style="vertical-align: inherit;">确认密码:</label>
-                        <input type="password" name="repassword" id="repassword" placeholder="密码">
-                        <label style="vertical-align: inherit;">性 别:</label>
-                        <br>
-                        <input type="radio" name="gender" value="0" checked>男
-                        &nbsp;
-                        <input type="radio" name="gender" value="1">女
-                        <br>
-                        <label style="vertical-align: inherit;">生 日:</label>
-                        <br>
-                        <input type="date" name="birthdate" id="birthdate">
-                        <br>
-                        <label>上传头像:</label>
-                        <br>
-                        <span class="btn btn-success fileinput-button">
-                                <input type="file" name="pic" id="ipc" accept="image/gif,image/png,image/jpeg">
-                            </span>
-                        <br>
-                        <label style="vertical-align: inherit;">电子邮箱:</label>
-                        <input type="email" name="email" id="email" placeholder="电子邮箱">
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" onclick="registerin()">提交更改</button>
-                    </div>
-                </div><!-- /.modal-content -->
-            </div><!-- /.modal -->
-        </div>
-        <hr>
-        <footer class="well">
-            <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
-        </footer>
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label style="vertical-align: inherit;">用 户 名:</label>
+                            <input type="text" name="uname_pro" id="uname_pro" placeholder="用户名"
+                                   value="<?php echo $res['uname'] ?>">
+                            <input type="hidden" id="uid" name="uid" value="<?php echo $res['uid'] ?>"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="vertical-align: inherit;">密 码:</label>
+                            <input type="password" name="password1_pro" id="password1_pro" placeholder="密码"
+                                   value="<?php echo $res['password'] ?>">
+                        </div>
+
+                        <div class="form-group">
+                            <label style="vertical-align: inherit;">性 别:</label>
+                            <br>
+                            <input type="radio" name="gender_pro"
+                                   value="0" <?php if ($res['gender'] == '0') echo 'checked' ?>>男
+                            &nbsp;&nbsp;
+                            <input type="radio" name="gender_pro"
+                                   value="1"<?php if ($res['gender'] == '1') echo 'checked' ?>>女
+                            <br>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="vertical-align: inherit;">生 日:</label>
+                            <br>
+                            <input type="date" name="birthdate_pro" id="birthdate_pro"
+                                   value="<?php echo $res['birthdate'] ?>">
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="pic">头像</label>
+                            <input type="file" id="xdaTanFileImg" onchange="xmTanUploadImg(this)" accept="image/*"/>
+                            <img id="xmTanImg" style="height: 20%;width: 50%" src="<?php echo $res['pic'] ?>"/>
+                            <div id="xmTanDiv"></div>
+                            <br>
+                        </div>
+
+                        <div class="form-group">
+                            <label style="vertical-align: inherit;">电子邮箱:</label>
+                            <input type="email" name="email_pro" id="email_pro" placeholder="电子邮箱"
+                                   value="<?php echo $res['email'] ?>">
+                        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="modify_f()">提交更改</button>
+                </div>
+
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
     </div>
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/js/bootstrap.min.js"></script>
-    <script>
-        function del_user() {
+    <hr>
+    <footer class="well">
+        <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
+    </footer>
+</div>
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/bootstrap.min.js"></script>
+<script>
+    function del_user() {
+
+        if (confirm("是否删除该用户？")) {
+
             let uid = $("#userid").val();
             let data = {
                 "userid": uid
             };
-            //console.log(uid);
             $.ajax({
                 url: "../update.php",
                 data: data,
@@ -239,7 +265,7 @@
 
                 success: function (result) {
                     console.log(result);
-                    confirm("是否删除该用户？");
+
                     window.location.reload();
 
                 },
@@ -249,25 +275,114 @@
                     window.location.reload();
                 }
             });
-
         }
 
-        $(document).ready(function () {
-            $('.dropdown-menu li a').hover(
-                function () {
-                    $(this).children('i').addClass('icon-white');
-                },
-                function () {
-                    $(this).children('i').removeClass('icon-white');
-                });
+    }
 
-            if ($(window).width() > 760) {
-                $('tr.list-users td div ul').addClass('pull-right');
+    $(document).ready(function () {
+        $('.dropdown-menu li a').hover(
+            function () {
+                $(this).children('i').addClass('icon-white');
+            },
+            function () {
+                $(this).children('i').removeClass('icon-white');
+            });
+
+        if ($(window).width() > 760) {
+            $('tr.list-users td div ul').addClass('pull-right');
+        }
+    });
+
+    function modify_f() {
+
+        let username = $('#uname_pro').val();
+        if (username === '') {
+            alert("必须输入用户名");
+            return;
+        }
+        let form = new FormData();
+        let password = $('#password1_pro').val();
+        if (password != '') {
+            form.append("password", password);
+        }
+        let type = $("input[name = 'gender_pro']:checked").val();
+        console.log(type);
+        let birthday = $('#birthdate_pro').val();
+        let email = $('#email_pro').val();
+        let img_file = document.getElementById("xdaTanFileImg");
+        let fileObj = img_file.files[0];
+        if (typeof(fileObj) == "undefined") {
+            console.log("img undefind");
+        } else {
+            form.append("img", fileObj);
+        }
+        form.append("username", username);
+        form.append("type", type);
+        form.append("birthday", birthday);
+        form.append("email", email);
+        form.append("user_pro", 1);
+        console.log("编辑");
+        let uid = $('#uid').val();
+        form.append('uid', uid);
+
+        $.ajax({
+            url: '../update.php',
+            type: 'post',
+            data: form,
+            dataType: 'text',
+            async: false,
+            processData: false,
+            contentType: false,
+            success: function (result) {
+                console.log(result);
+                alert("修改信息成功");
+                window.location.reload();
+
+            },
+            error: function (data) {
+                console.log(data);
+                alert("失败");
+                window.location.reload();
             }
-        });
+        })
+    }
+    //判断浏览器是否支持FileReader接口
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xmTanImg").setAttribute("disabled", "disabled");
+    }
+
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        let file = obj.files[0];
+        console.log(obj);
+        console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+        let reader = new FileReader();
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读取....");
+            let img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+        }
+        reader.readAsDataURL(file)
+    }
 
 
-    </script>
+</script>
 </body>
 <style>
     html, body {

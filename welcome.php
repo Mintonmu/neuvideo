@@ -58,9 +58,8 @@
         </form>
         <div class="dropdown pull-right" style="left: 100%">
             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                <?php if (!isset($_SESSION)) {
-                    session_start();
-                }
+                <?php
+                session_start();
                 $c = $d->executeSql("select * from users where uname=" . $_SESSION["username"]);
                 $res = mysqli_fetch_assoc($c);
                 echo $_SESSION["username"];
@@ -130,7 +129,7 @@
                         <label style="vertical-align: inherit;">用 户 名:</label>
                         <input type="text" name="uname_pro" id="uname_pro" placeholder="用户名"
                                value="<?php echo $res['uname'] ?>">
-                        <input hidden id="uid" name="uid" value="<?php echo $res['uid'] ?>"/>
+                        <input type="hidden" id="uid" name="uid" value="<?php echo $res['uid'] ?>"/>
                     </div>
 
                     <div class="form-group">
@@ -210,8 +209,6 @@
 
 </html>
 <script>
-
-
     function modify_f() {
 
         let username = $('#uname_pro').val();
@@ -275,11 +272,11 @@
 
     //选择图片，马上预览
     function xmTanUploadImg(obj) {
-        var file = obj.files[0];
+        let file = obj.files[0];
         console.log(obj);
         console.log(file);
         console.log("file.size = " + file.size);  //file.size 单位为byte
-        var reader = new FileReader();
+        let reader = new FileReader();
         //读取文件过程方法
         reader.onloadstart = function (e) {
             console.log("开始读取....");
@@ -295,7 +292,7 @@
         }
         reader.onload = function (e) {
             console.log("成功读取....");
-            var img = document.getElementById("xmTanImg");
+            let img = document.getElementById("xmTanImg");
             img.src = e.target.result;
         }
         reader.readAsDataURL(file)

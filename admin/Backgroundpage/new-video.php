@@ -4,9 +4,6 @@
     <meta charset="utf-8">
     <title>Neu后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Admin panel developed with the Bootstrap from Twitter.">
-    <meta name="author" content="travis">
-
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
     <link href="../assets/css/site.css" rel="stylesheet">
     <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
@@ -91,7 +88,7 @@
                     <li class="nav-header"><i class="icon-user"></i>信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
                     <li><a href="#">我的设置</a></li>
-                    <li><a href="#">登出</a></li>
+                    <li><a href="../Adminlogout.php">登出</a></li>
                 </ul>
             </div>
         </div>
@@ -102,7 +99,7 @@
                         <small>添加视频</small>
                     </h1>
                 </div>
-                <form class="form-horizontal">
+                <form action="" class="form-horizontal" enctype="multipart/form-data">
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="name">视频名</label>
@@ -110,51 +107,64 @@
                                 <input type="text" class="input-xlarge" id="name"/>
                             </div>
                         </div>
+
+                        <?php
+
+                        include("../../system/dbConn.php");
+                        $p = new DBconnect();
+                        $adminname = $_SESSION["adminname"];
+                        $Sql = "select * from videotype";
+                        $sql1 = "select * from admins where adminname ='$adminname'";
+                        $res = $p->executeSql($sql1);
+                        $num = mysqli_fetch_assoc($res);
+                        $_SESSION['adminid'] = $num['adminid'];
+                        $result = $p->executeSql($Sql);
+                        ?>
                         <div class="control-group">
-                            <label class="control-label" for="email">上传日期</label>
+                            <label class="control-label" for="name">视频类型</label>
                             <div class="controls">
-                                <input type="date" class="input-xlarge" id="date"/>
+                                <select class="form-control" id="videotype">
+                                    <?php
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        ?>
+                                        <option value="<?php echo $row["tid"]; ?>">
+                                            <?php echo $row["typename"]; ?>
+                                        </option>
+                                        <?php
+                                    } ?>
+                                </select>
+
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" for="gender">上传管理员</label>
+                            <label class="control-label" for="name">视频简介</label>
                             <div class="controls">
-                                <input type="radio" name="gender" value="0" checked>男
-                                &nbsp;
-                                <input type="radio" name="gender" value="1">女
+                                <textarea id="description" rows="4" cols="30" style="line-height: 1.5;height: 100px;"
+                                          placeholder="请输入视频相关简介....."></textarea>
                             </div>
                         </div>
 
                         <div class="control-group">
-                            <label class="control-label" for="birthdate">点击次数</label>
-                            <div class="controls">
-                                <input type="date" class="input-xlarge" id="birthdate"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="file">上传头像</label>
+                            <label class="control-label" for="file">上传海报</label>
                             <div class="controls">
                                <span class="btn btn-success fileinput-button">
                                 <input type="file" name="pic" id="ipc" accept="image/gif,image/png,image/jpeg">
                             </span>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label" for="email">下载次数</label>
-                            <div class="controls">
-                                <input type="text" class="input-xlarge" id="city"/>
-                            </div>
-                        </div>
+
                         <div class="control-group">
                             <label class="control-label" for="email">下载地址</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="city"/>
+                                <input type="text" class="input-xlarge" id="address"/>
                             </div>
                         </div>
+
                         <div class="form-actions">
-                            <input type="submit" class="btn btn-success btn-large" value="Save Video"/> <a class="btn"
-                                                                                                          href="users.php">取消</a>
+                            <input type="submit" class="btn btn-success btn-large" onclick="subvideo();"
+                                   value="Save Video"/> <a class="btn"
+                                                           href="users.php">取消</a>
                         </div>
                     </fieldset>
                 </form>
@@ -166,6 +176,40 @@
     </footer>
 
 </div>
+<script>
+    function subvideo() {
+
+        let name = $("#name").val();
+        let type = $("#videotype option:selected").val();
+        let description = $("#description").val();
+        let address = $("#address").val();
+        let img_file = document.getElementById("ipc");
+        let fileObj = img_file.files[0];
+        let data = {
+            'name': name,
+            'type': type,
+            'description': description,
+            'address': address,
+            'fileobj': fileObj,
+        };
+
+        $.ajax({
+            url: "../update.php",
+            type: "post",
+            data: data,
+            dataType: 'text',
+            success: function (result) {
+                console.log(result);
+                location.href = "video.php";
+
+            },
+            error: function (result) {
+            }
+        })
+
+
+    }
+</script>
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 </body>
