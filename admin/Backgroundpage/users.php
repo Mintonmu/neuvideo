@@ -62,6 +62,8 @@
                             <li><a href="new-video.php">添加视频</a></li>
                             <li class="divider"></li>
                             <li><a href="video.php">视频管理</a></li>
+                            <li class="divider"></li>
+                            <li><a href="videotype.php">视频类型管理</a> </li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
@@ -87,6 +89,7 @@
                     <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
+                    <li><a href="videotype.php">视频类型管理</a> </li>
                     <li><a href="comment.php">评论管理</a></li>
                     <li class="nav-header"><i class="icon-user"></i>信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
@@ -229,7 +232,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="modify_submit()">提交更改</button>
+                    <button type="button" class="btn btn-primary" onclick="modify_f()">提交更改</button>
                 </div>
 
                 </form>
@@ -244,7 +247,6 @@
 <script src="../assets/js/jquery.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
-
 
     let trandata = function (uname, password, uid, gender, birthdate, pic, email) {
         $("#uname_pro").val(uname);
@@ -263,47 +265,65 @@
             $("input[name = 'gender_pro']").eq(1).click();
         }
     };
-    let modify_submit = function () {
-
-        let uname_pro = $("#uname_pro").val();
-        let password_pro = $("#password1_pro").val();
-        let uid = $("#uid").val();
-        let gender = $("input[name = 'gender_pro']:checked").val();
-        let birthdate = $("#birthdate_pro").val();
-        let img_file = document.getElementById("xdaTanFileImg");
-        let fileObj = img_file.files[0];
-        console.log(uname_pro);
-
-        console.log(fileObj);
-        let data = {
-            "uname_pro": uname_pro,
-            "password_pro": password_pro,
-            "uid": uid,
-            "gender": gender,
-            "birthdate": birthdate,
-            "fileObj": fileObj,
-        };
-        $.ajax({
-            url: '../update.php',
-            type: 'post',
-            data: data,
-            dataType: 'text',
-            success: function (result) {
-                $("#myModal").modal('hide');
-                console.log(result);
-                if (result == "success") {
-                    $("#adminname").val(adminname);
-                    $("#password").val(password);
-                    alert("您已经修改成功");
-                    location.reload(true);
-                }
-            },
-            error: function (msg) {
-                alert(msg);
-            }
-        })
-
-    };
+    // let modify_submit = function () {
+    //     let form = new FormData();
+    //     let uname_pro = $("#uname_pro").val();
+    //     let password_pro = $("#password1_pro").val();
+    //     let uid = $("#uid").val();
+    //     let gender = $("input[name = 'gender_pro']:checked").val();
+    //     let birthday = $("#birthdate_pro").val();
+    //     let img_file = document.getElementById("xdaTanFileImg");
+    //     let fileObj = img_file.files[0];
+    //     let email = $("#email_pro").val();
+    //     if (typeof(fileObj) == "undefined") {
+    //         console.log("img undefind");
+    //     } else {
+    //         form.append("img", fileObj);
+    //     }
+    //     form.append("username", uname_pro);
+    //     form.append("type", gender);
+    //     form.append("birthday", birthday);
+    //     form.append("email", email);
+    //     form.append("user_pro", 1);
+    //     form.append("uid", uid);
+    //     form.append("password", password_pro);
+    //     form.append("img", fileObj);
+    //
+    //     $.ajax({
+    //         url: '../update.php',
+    //         type: 'post',
+    //         data: form,
+    //         dataType: 'text',
+    //         success: function (result) {
+    //             $("#myModal").modal('hide');
+    //             console.log(result);
+    //             if (result == "success") {
+    //                 // $("#uname_pro").val(uname);
+    //                 // $("#password1_pro").val(password);
+    //                 // $("#uid").val(uid);
+    //                 // $("#birthdate_pro").val(birthdate);
+    //                 // $("#email_pro").val(email);
+    //                 // $("#xmTanImg").attr("src", "../" + "." + pic);
+    //                 // if (gender == 0) {
+    //                 //     $("input[name = 'gender_pro']").eq(0).attr("checked", "checked");
+    //                 //     $("input[name = 'gender_pro']").eq(1).removeAttr("checked");
+    //                 //     $("input[name = 'gender_pro']").eq(0).click();
+    //                 // } else {
+    //                 //     $("input[name = 'gender_pro']").eq(1).attr("checked", "checked");
+    //                 //     $("input[name = 'gender_pro']").eq(0).removeAttr("checked");
+    //                 //     $("input[name = 'gender_pro']").eq(1).click();
+    //                 // }
+    //                 console.log(result);
+    //                 alert("修改信息成功");
+    //                 window.location.reload();
+    //             }
+    //         },
+    //         error: function (msg) {
+    //             alert(msg);
+    //         }
+    //     })
+    //
+    // };
 
     function del_user() {
 

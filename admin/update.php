@@ -5,15 +5,56 @@
  * Date: 2018/11/17
  * Time: 11:37
  */
-
 include '../system/dbConn.php';
 $p = new DBconnect();
 date_default_timezone_set("Asia/Shanghai");
 session_start();
+
+//删除视频类型;
+if (isset($_GET['tid'])) {
+    $tid = $_GET['tid'];
+    $sql = "delete from videotype where tid = '$tid'";
+    $p->executeSql($sql);
+    echo "success";
+    header("location:./Backgroundpage/videotype.php");
+    return;
+}
 //更新视频数据
 
+if (isset($_POST["videoname_pro"])) {
 
-//删除视频
+    $videoname_pro = $_POST["videoname_pro"];
+    $videotype_pro = $_POST["videotype_pro"];
+
+    if (isset($_FILES["fileObj"])) {
+        $fileObj = $_FILES["fileObj"];
+        $t = time() . $fileObj['name'];
+        $filename = "../posters/" . $t;
+        move_uploaded_file($fileObj["tmp_name"], $filename);
+    }
+    $intro = $_POST["intro"];
+    $address_pro = $_POST["address_pro"];
+    $uploadadmin = $_SESSION["adminid"];
+    if (isset($_POST['vid'])) {
+        $vid = $_POST['vid'];
+        $time = date("y-m-d H:i:s", time());
+        if ($t == '') {
+            $p->update("videos", array("videoname", "intro", "uploaddate", "uploadadmin", "tid", "address"), array($videoname_pro, $intro, $time, $uploadadmin, $videotype_pro, $address_pro), "vid", $vid);
+        } else {
+            $p->update("videos", array("videoname", "intro", "uploaddate", "uploadadmin", "tid", "address", "pic"), array($videoname_pro, $intro, $time, $uploadadmin, $videotype_pro, $address_pro, $filename), "vid", $vid);
+        }
+        echo 'success';
+        return;
+    }
+    $p->insert('videos', array('videoname', 'tid', 'pic', 'intro', 'uploaddate', 'uploadadmin', 'address'),
+        array($videoname_pro, $videotype_pro, $filename, $intro, $time, $uploadadmin, $address_pro)
+    );
+    echo 'success';
+    return;
+}
+
+
+////删除视频
 if (isset($_GET['vid'])) {
     $vid = $_GET['vid'];
     $sql = "delete from videos where vid = '$vid'";
@@ -22,7 +63,7 @@ if (isset($_GET['vid'])) {
     return;
 }
 
-//删除评论
+////删除评论
 if (isset($_GET["cid"])) {
     $cid = $_GET['cid'];
     $sql = "delete from comments where cid = '$cid'";
@@ -31,7 +72,7 @@ if (isset($_GET["cid"])) {
     return;
 
 }
-//添加管理员
+////添加管理员
 if (isset($_POST["adminname"]) && isset($_POST["adminpassword"])) {
     $adminname_pro = $_POST["adminname"];
     $password_pro = $_POST["adminpassword"];
@@ -40,9 +81,8 @@ if (isset($_POST["adminname"]) && isset($_POST["adminpassword"])) {
     header("location:./Backgroundpage/roles.php");
     return;
 }
-//添加视频
+////添加视频
 if (isset($_POST["videoname"])) {
-    echo "qqqqqq\n";
     $uploadadmin = $_SESSION["adminid"];
     echo $uploadadmin;
     $videoname = $_POST["videoname"];
@@ -60,7 +100,7 @@ if (isset($_POST["videoname"])) {
     header("location:./Backgroundpage/video.php");
     return;
 }
-//删除用户
+////删除用户
 if (isset($_POST["userid"])) {
     $uid = $_POST["userid"];
     $sql1 = "delete from users where uid=$uid ";
@@ -81,6 +121,7 @@ if (isset($_POST["adminid"])) {
 }
 //更新用户数据
 if (isset($_POST['user_pro'])) {
+    echo $_POST['username'];
     $uname = $_POST['username'];
     $gender = $_POST['type'];
     $birthday = $_POST['birthday'];
@@ -102,7 +143,7 @@ if (isset($_POST['user_pro'])) {
         //edit
         $uid = $_POST['uid'];
         if (isset($_POST['password']) && isset($_FILES['img'])) {
-            $sql1 = "update users set uname = '$uname', gender='$gender',birthdate='$birthday',pic='img/$t',email='$email', password='$password' where uid = $uid";
+            $sql1 = "update users set uname = '$uname', gender='$gender',birthdate='$birthday',pic='$filename',email='$email', password='$password' where uid = $uid";
             $p->executeSql($sql1);
             echo "2";
         } else if (isset($_POST['password']) && !isset($_FILES['img'])) {
@@ -110,7 +151,7 @@ if (isset($_POST['user_pro'])) {
             $p->executeSql($sql1);
             echo "3";
         } else if (!isset($_POST['password']) && isset($_FILES['img'])) {
-            $sql1 = "update users set uname = '$uname', gender='$gender',birthdate='$birthday',pic='img/$t',email='$email' where uid = $uid";
+            $sql1 = "update users set uname = '$uname', gender='$gender',birthdate='$birthday',pic='$filename',email='$email' where uid = $uid";
             echo "4";
             $p->executeSql($sql1);
         } else {

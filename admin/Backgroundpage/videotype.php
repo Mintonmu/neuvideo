@@ -5,7 +5,7 @@
     <title>Neu后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Admin panel developed with the Bootstrap from Twitter.">
-    <meta name="author" content="muming">
+    <meta name="author" content="travis">
 
     <link href="../assets/css/bootstrap.css" rel="stylesheet">
     <link href="../assets/css/site.css" rel="stylesheet">
@@ -13,6 +13,13 @@
     <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    <!--[if lte IE 8]>
+    <script src="js/excanvas.min.js"></script><![endif]-->
+    <style type="text/css">
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -25,7 +32,7 @@
             </a>
             <a class="brand" href="welcome.php">Neu视频后台管理系统</a>
             <div class="btn-group pull-right">
-                <a class="btn" href="my-profile.php"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
+                <a class="btn" href="my-profile.php"><i class="icon-user"></i> <?php if (!isset($_SESSION)) {
                         session_start();
                     }
                     echo $_SESSION["adminname"]; ?></a>
@@ -41,7 +48,7 @@
             <div class="nav-collapse">
                 <ul class="nav">
                     <li><a href="welcome.php">主页</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户<b
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户 <b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class="divider"></li>
@@ -62,8 +69,7 @@
                             <li><a href="new-video.php">添加视频</a></li>
                             <li class="divider"></li>
                             <li><a href="video.php">视频管理</a></li>
-                            <li class="divider"></li>
-                            <li><a href="videotype.php">视频类型管理</a> </li>
+                            <li><a href="videotype.php">视频类型管理</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
@@ -89,7 +95,7 @@
                     <li class="active"><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
-                    <li><a href="videotype.php">视频类型管理</a> </li>
+                    <li><a href="videotype.php">视频类型管理</a></li>
                     <li><a href="comment.php">评论管理</a></li>
                     <li class="nav-header"><i class="icon-user"></i> 信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
@@ -100,8 +106,9 @@
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>管理员
-                        <small>管理员管理</small>
+                    <h1>视频类型
+                        <small>视频类型管理</small>
+
                     </h1>
                 </div>
                 <table class="table table-striped table-bordered table-condensed">
@@ -121,19 +128,18 @@
                     if (!isset($_GET["size"])) {
                         $_GET['size'] = 5;
                     }
-                    $ary = getRolesDate($_GET['num'], $_GET['size']);
+                    $ary = getVideotypeDate($_GET['num'], $_GET['size']);
 
                     while ($num = mysqli_fetch_assoc($ary[0])) {
                         echo '<tr class="list-roles">';
-                        echo "<td >" . $num['adminid'] . "</td >";
-                        echo "<input  type=\"hidden\" id='adminid' value=" . $num['adminid'] . " />";
-                        echo "<td id='" . "adminname_" . $num['adminid'] . "'>" . $num['adminname'] . "</td >";
+                        echo "<td >" . $num['tid'] . "</td >";
+                        echo "<td id='" . "typename_" . $num['tid'] . "'>" . $num['typename'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"] . '\')">设置<span class="caret"></span></a>
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="trandata(\'' . $num["tid"] . '\',\'' . $num["typename"] . '\');">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\'' . 'adminname_' . $num['adminid'] . '\')"><i class="icon-pencil" ></i>编辑</a></li>
-                                                            <li><a href="#" onclick="del_roles()"><i class="icon-trash"></i> 删除</a></li>
+                                                            <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
+                                                            <li><a href="../update.php?tid=' . $num['tid'] . '"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>';
@@ -145,40 +151,34 @@
                 <div class="pagination">
                     <ul>
                         <?php
-                        //echo 1;
-                        if (!isset($_GET["num"])) {
-                            $_GET['num'] = 1;
-                        }
-                        if (!isset($_GET["size"])) {
-                            $_GET['size'] = 5;
-                        }
-                        $ary = getUsersDate($_GET['num'], $_GET['size']);
-                        //echo $ary[1];
-
                         if (intval($_GET['num']) == 1) {
-                            echo "<li><a href=\"roles.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
+                            echo "<li><a href=\"videotype.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
 
                         } else {
-                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
+                            echo "<li><a href=\"videotype.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
                         }
                         for ($i = 1; $i <= $ary[1]; $i++) {
-                            echo "<li>" . "<a href=\"roles.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
+                            echo "<li>" . "<a href=\"videotype.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
                         }
                         if (intval($_GET['num']) == $ary[2]) {
-                            echo "<li><a href=\"roles.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
+                            echo "<li><a href=\"videotype.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
 
                         } else {
-                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
+                            echo "<li><a href=\"videotype.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
                         }
                         ?>
                     </ul>
+
                 </div>
-
-
-                <a href="new-role.php" class="btn btn-success">添加管理员</a>
+                <input type="text" id="video_type">
+                <a class="btn btn-success" onclick="add_videotype()">添加视频类型</a>
+                <br>
+                <br>
+                <hr>
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
         <div class="modal-dialog">
@@ -188,27 +188,23 @@
                     <h4 class="modal-title" id="myModalLabel">Register</h4>
                 </div>
                 <div class="modal-body">
-                    <!--                    <div class="alert alert-warning" id="tooltip">-->
-                    <!--                        <a href="#" class="close" data-dismiss="alert">-->
-                    <!--                            &times;-->
-                    <!--                        </a>-->
-                    <!--                        <strong>警告！</strong>您两次输入的密码不一致-->
-                    <!--                    </div>-->
-                    <input type="hidden" id="adminid">
-                    <input type="hidden" id="adminname_id">
-                    <label style="vertical-align: inherit;">用 户 名:</label>
-                    <input type="text" name="adminname" id="adminname" placeholder="用户名">
-                    <label style="vertical-align: inherit;">密 码:</label>
-                    <input type="password" name="password" id="password" placeholder="密码">
+                    <form>
+                        <label style="vertical-align: inherit;">视频类型：</label>
+                        <input type="hidden" name="tid" id="tid">
+                        <input type="text" name="videotype" id="videotype">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="editsubmit()">提交更改</button>
+                    <button type="button" class="btn btn-primary" onclick="modify_submit()">提交更改</button>
                 </div>
+
+                </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal -->
     </div>
+
     <hr>
+
     <footer class="well">
         <a>HackRandom工作室 版权所有©2018-2020 技术支持电话：13099255092</a>
     </footer>
@@ -216,116 +212,156 @@
 </div>
 
 <script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/jquery.flot.js"></script>
+<script src="../assets/js/jquery.flot.resize.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
-
-    function del_roles() {
-
-        if (confirm("是否删除该管理员？")) {
-            let aid = $("#adminid").val();
-            let data = {
-                "adminid": aid
-            };
-            //console.log(uid);
-            $.ajax({
-                url: "../update.php",
-                data: data,
-                type: 'post',
-                dataType: 'text',
-
-                success: function (result) {
-                    console.log(result);
-
-                    window.location.reload();
-
-                },
-                error: function (data) {
-                    console.log(data);
-                    alert("失败");
-                    window.location.reload();
+    function add_videotype() {
+        let video_type = $("#video_type").val();
+        $.ajax({
+            url: "process.php",
+            data: {"video_type": video_type},
+            type: 'post',
+            dataType: 'text',
+            success: function (result) {
+                if (result == "success") {
+                    alert("添加视频类型成功");
+                    self.location.reload(true);
                 }
-            });
-        }
-    }
-
-
-    $(document).ready(function () {
-        $('.dropdown-menu li a').hover(
-            function () {
-                $(this).children('i').addClass('icon-white');
             },
-            function () {
-                $(this).children('i').removeClass('icon-white');
-            });
-    });
-</script>
-</body>
-<style>
-    html, body {
-        height: 95%;
-    }
-
-    body {
-        position: relative;
-        min-height: 450px;
-    }
-
-    footer {
-        position: absolute;
-        min-width: 100%;
-        bottom: 0;
-        left: 0;
-    }
-
-</style>
-
-
-<script>
-    var transdata = function (adminame, password, adminid) {
-        $("#adminname").val(adminame);
-        $("#password").val(password);
-        $("#adminid").val(adminid);
+            error: function (result) {
+                alert("添加视频类型失败");
+                self.history.go(-1);
+            }
+        })
 
     };
-    var editsubmit = function () {
 
-        var adminname = $("#adminname").val();
-        var password = $("#password").val();
-        var adminid = $("#adminid").val();
-        let data = {
-            "adminname": adminname,
-            "password": password,
-            "adminid": adminid,
-        };
-        // let url = '../update.php';
-        // fetch(url, {
-        //     method: 'POST', // or 'PUT'
-        //     body: JSON.stringify(data),
-        //     headers: new Headers({
-        //         'Content-Type': 'application/json'
-        //     })
-        // }).then(res => res.json())
-        //     .catch(error => console.error('Error:', error))
-        //     .then(response => console.log('Success:', response));
+    let trandata = function (tid, typename) {
+        $("#tid").val(tid);
+        $("#videotype").val(typename);
+
+    };
+    var modify_submit = function () {
+
+        let tid = $("#tid").val();
+        let typename = $("#videotype").val();
+
         $.ajax({
-            url: 'process.php',
-            type: 'post',
-            data: data,
+            url: "process.php",
+            type: "post",
+            data: {"tid": tid, "typename": typename},
             dataType: 'text',
             success: function (result) {
                 $("#myModal").modal('hide');
                 if (result == "success") {
                     alert("您已经修改成功");
-                    window.location.reload();
+                    location.reload(true);
                 }
             },
-            error: function (msg) {
-                alert(msg);
+            error: function (data) {
+                console.log(data);
             }
         })
 
-    }
+    };
 
 
+    $(function () {
+        var data = [
+            {
+                label: 'Page Views',
+                data: [[0, 19000], [1, 15500], [2, 11100], [3, 15500]]
+            }];
+        var dataVisits = [
+            {
+                label: 'Visits',
+                data: [[0, 1980], [1, 1198], [2, 830], [3, 1550]]
+            }];
+        var options = {
+            legend: {
+                show: true,
+                margin: 10,
+                backgroundOpacity: 0.5
+            },
+            points: {
+                show: true,
+                radius: 3
+            },
+            lines: {
+                show: true
+            },
+            grid: {
+                borderWidth: 1,
+                hoverable: true
+            },
+            xaxis: {
+                axisLabel: 'Month',
+                ticks: [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']],
+                tickDecimals: 0
+            },
+            yaxis: {
+                tickSize: 1000,
+                tickDecimals: 0
+            }
+        };
+        var optionsVisits = {
+            legend: {
+                show: true,
+                margin: 10,
+                backgroundOpacity: 0.5
+            },
+            bars: {
+                show: true,
+                barWidth: 0.5,
+                align: 'center'
+            },
+            grid: {
+                borderWidth: 1,
+                hoverable: true
+            },
+            xaxis: {
+                axisLabel: 'Month',
+                ticks: [[0, 'Jan'], [1, 'Feb'], [2, 'Mar'], [3, 'Apr'], [4, 'May'], [5, 'Jun'], [6, 'Jul'], [7, 'Aug'], [8, 'Sep'], [9, 'Oct'], [10, 'Nov'], [11, 'Dec']],
+                tickDecimals: 0
+            },
+            yaxis: {
+                tickSize: 1000,
+                tickDecimals: 0
+            }
+        };
+
+        function showTooltip(x, y, contents) {
+            $('<div id="tooltip">' + contents + '</div>').css({
+                position: 'absolute',
+                display: 'none',
+                top: y + 5,
+                left: x + 5,
+                border: '1px solid #D6E9C6',
+                padding: '2px',
+                'background-color': '#DFF0D8',
+                opacity: 0.80
+            }).appendTo("body").fadeIn(200);
+        }
+
+        var previousPoint = null;
+        $("#placeholder, #visits").bind("plothover", function (event, pos, item) {
+            if (item) {
+                if (previousPoint != item.dataIndex) {
+                    previousPoint = item.dataIndex;
+
+                    $("#tooltip").remove();
+                    showTooltip(item.pageX, item.pageY, item.series.label + ": " + item.datapoint[1]);
+                }
+            }
+            else {
+                $("#tooltip").remove();
+                previousPoint = null;
+            }
+        });
+        $.plot($("#placeholder"), data, options);
+        $.plot($("#visits"), dataVisits, optionsVisits);
+    });
 </script>
+</body>
 </html>

@@ -67,6 +67,8 @@
                             <li><a href="new-video.php">添加视频</a></li>
                             <li class="divider"></li>
                             <li><a href="video.php">视频管理</a></li>
+                            <li class="divider"></li>
+                            <li><a href="videotype.php">视频类型管理</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
@@ -91,6 +93,7 @@
                     <li class="active"><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
+                    <li><a href="videotype.php">视频类型管理</a></li>
                     <li><a href="comment.php">评论管理</a></li>
                     <li class="nav-header"><i class="icon-user"></i> 信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
@@ -132,7 +135,6 @@
                                <div class="btn-group">
                                                  <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"] . '\')">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="#" data-toggle="modal" data-target="#myModal" onclick="f(\'' . 'adminname_' . $num['adminid'] . '\')"><i class="icon-pencil" ></i>编辑</a></li>
                                                             <li><a href="../update.php?cid=' . $num['cid'] . '"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
@@ -146,19 +148,19 @@
                     <ul>
                         <?php
                         if (intval($_GET['num']) == 1) {
-                            echo "<li><a href=\"roles.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
+                            echo "<li><a href=\"comment.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
 
                         } else {
-                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
+                            echo "<li><a href=\"comment.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
                         }
                         for ($i = 1; $i <= $ary[1]; $i++) {
-                            echo "<li>" . "<a href=\"roles.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
+                            echo "<li>" . "<a href=\"comment.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
                         }
                         if (intval($_GET['num']) == $ary[2]) {
-                            echo "<li><a href=\"roles.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
+                            echo "<li><a href=\"comment.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
 
                         } else {
-                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
+                            echo "<li><a href=\"comment.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
                         }
                         ?>
                     </ul>

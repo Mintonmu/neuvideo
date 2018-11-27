@@ -61,6 +61,8 @@
                             <li><a href="new-video.php">添加视频</a></li>
                             <li class="divider"></li>
                             <li><a href="video.php">视频管理</a></li>
+                            <li class="divider"></li>
+                            <li><a href="videotype.php">视频类型管理</a> </li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
@@ -86,6 +88,7 @@
                     <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
+                    <li><a href="videotype.php">视频类型管理</a> </li>
                     <li><a href="comment.php">评论管理</a></li>
                     <li class="nav-header"><i class="icon-user"></i>信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
@@ -160,8 +163,7 @@
 
                         <div class="form-actions">
                             <input type="submit" class="btn btn-success btn-large"
-                                   value="Save Video"/> <a class="btn"
-                                                           href="users.php">取消</a>
+                                   value="添加视频"/> <a class="btn" href="users.php">取消</a>
                         </div>
                     </fieldset>
                 </form>

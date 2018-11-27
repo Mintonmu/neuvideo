@@ -69,6 +69,8 @@
                             <li><a href="new-video.php">添加视频</a></li>
                             <li class="divider"></li>
                             <li><a href="video.php">视频管理</a></li>
+                            <li class="divider"></li>
+                            <li><a href="videotype.php">视频类型管理</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
@@ -94,6 +96,7 @@
                     <li class="active"><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
+                    <li><a href="videotype.php">视频类型管理</a></li>
                     <li><a href="comment.php">评论管理</a></li>
                     <li class="nav-header"><i class="icon-user"></i> 信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
@@ -133,7 +136,7 @@
                         echo "<td id='" . "videoname_" . $num['vid'] . "'>" . $num['videoname'] . "</td >";
                         echo '<td>
                                <div class="btn-group">
-                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="trandata(\'' . $num["videoname"] . '\',\'' . $num["tid"] . '\',\'' . $num["pic"] . '\',\'' . $num["intro"] . '\',\'' . $num["uploadadmin"] . '\',\'' . $num["address"] . '\');">设置<span class="caret"></span></a>
+                                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="trandata(\'' . $num["vid"] . '\',\'' . $num["videoname"] . '\',\'' . $num["tid"] . '\',\'' . $num["pic"] . '\',\'' . $num["intro"] . '\',\'' . $num["uploadadmin"] . '\',\'' . $num["address"] . '\');">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
                                                             <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
                                                             <li><a href="../update.php?vid=' . $num['vid'] . '"><i class="icon-trash"></i> 删除</a></li>
@@ -149,25 +152,29 @@
                     <ul>
                         <?php
                         if (intval($_GET['num']) == 1) {
-                            echo "<li><a href=\"roles.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
+                            echo "<li><a href=\"video.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
 
                         } else {
-                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
+                            echo "<li><a href=\"video.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
                         }
                         for ($i = 1; $i <= $ary[1]; $i++) {
-                            echo "<li>" . "<a href=\"roles.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
+                            echo "<li>" . "<a href=\"video.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
                         }
                         if (intval($_GET['num']) == $ary[2]) {
-                            echo "<li><a href=\"roles.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
+                            echo "<li><a href=\"video.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
 
                         } else {
-                            echo "<li><a href=\"roles.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
+                            echo "<li><a href=\"video.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
                         }
                         ?>
                     </ul>
 
                 </div>
                 <a href="new-video.php" class="btn btn-success">添加视频</a>
+                <br>
+                <br>
+                <hr>
+
             </div>
         </div>
     </div>
@@ -186,8 +193,9 @@
                     <h4 class="modal-title" id="myModalLabel">Register</h4>
                 </div>
                 <div class="modal-body">
-                    <form action="" method="post" enctype="multipart/form-data">
+                    <form>
                         <label style="vertical-align: inherit;">视频名称：</label>
+                        <input type="hidden" name="vid" id="vid">
                         <input type="text" name="videoname_pro" id="videoname_pro">
                         <label class="control-label" for="name">视频类型</label>
                         <div class="controls">
@@ -248,9 +256,63 @@
 <script src="../assets/js/jquery.flot.resize.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
-    let trandata = function (videoname, tid, pic, intro, uploadamin, address) {
+    function add_videotype() {
+        let video_type = $("#videotype").val();
+        $.ajax({
+            url: "process.php",
+            data: {"video_type": video_type},
+            type: 'post',
+            dataType: 'text',
+            success: function (result) {
+                if (result == "success") {
+                    alert("添加视频类型成功");
+                    self.location.reload(true);
+                }
+            },
+            error: function (result) {
+                alert("添加视频类型失败");
+                self.history.go(-1);
+            }
+        })
 
-        console.log(videoname);
+    };
+    if (typeof FileReader == 'undefined') {
+        document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
+        //使选择控件不可操作
+        document.getElementById("xmTanImg").setAttribute("disabled", "disabled");
+    }
+
+    //选择图片，马上预览
+    function xmTanUploadImg(obj) {
+        let file = obj.files[0];
+        console.log(obj);
+        console.log(file);
+        console.log("file.size = " + file.size);  //file.size 单位为byte
+        let reader = new FileReader();
+        //读取文件过程方法
+        reader.onloadstart = function (e) {
+            console.log("开始读取....");
+        }
+        reader.onprogress = function (e) {
+            console.log("正在读取中....");
+        }
+        reader.onabort = function (e) {
+            console.log("中断读取....");
+        }
+        reader.onerror = function (e) {
+            console.log("读取异常....");
+        }
+        reader.onload = function (e) {
+            console.log("成功读s取....");
+            let img = document.getElementById("xmTanImg");
+            img.src = e.target.result;
+        }
+        reader.readAsDataURL(file)
+    }
+
+    let trandata = function (vid, videoname, tid, pic, intro, uploadamin, address) {
+
+        $("#vid").val(vid);
         $("#videoname_pro").val(videoname);
         $("#videotype_pro").val(tid);
         $("#xmTanImg").attr("src", "../" + pic);
@@ -258,7 +320,9 @@
         $("#address_pro").val(address);
 
     };
-    let modify_submit = function () {
+    var modify_submit = function () {
+        let form = new FormData();
+        let vid = $("#vid").val();
         let videoname_pro = $("#videoname_pro").val();
         let videotype_pro = $("#videotype_pro option:selected").val();
         let img_file = document.getElementById("xdaTanFileImg");
@@ -266,35 +330,40 @@
         let intro = $("#description_pro").val();
         let address_pro = $("#address_pro").val();
 
-        let data = {
-            "videoname_pro": videoname_pro,
-            "videotype_pro": videotype_pro,
-            "fileObj": fileObj,
-            "intro": intro,
-            "address_pro": address_pro,
-        };
+        form.append("vid", vid);
+        form.append("videoname_pro", videoname_pro);
+        form.append("videotype_pro", videotype_pro);
+        form.append("fileObj", fileObj);
+        form.append("intro", intro);
+        form.append("address_pro", address_pro);
 
         $.ajax({
             url: "../update.php",
             type: "post",
-            data: data,
+            data: form,
             dataType: 'text',
+            async: false,
+            processData: false,
+            contentType: false,
             success: function (result) {
                 $("#myModal").modal('hide');
-                console.log(result);
                 if (result == "success") {
-                    $("#adminname").val(adminname);
-                    $("#password").val(password);
+                    $("#vid").val(vid);
+                    $("#videoname_pro").val(videoname_pro);
+                    $("#videotype_pro").val(videotype_pro);
+                    $("#description_pro").val(intro);
+                    $("#address_pro").val(address_pro);
                     alert("您已经修改成功");
                     location.reload(true);
                 }
             },
-            error: function (msg) {
-                alert(msg);
+            error: function (data) {
+                console.log(data);
             }
         })
 
     };
+
 
     $(function () {
         var data = [
