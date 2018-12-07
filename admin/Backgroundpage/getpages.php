@@ -97,3 +97,46 @@ function getVideotypeDate($pageNum, $pageSize)
 
 }
 
+function getVideoDetailDate($pageNum, $pageSize, $d)
+{
+
+
+    if (isset($_GET['tid']) && isset($_GET['search'])) {
+        $sql = 'select * from videos where tid=' . $_GET['tid'] . ' and videoname like "%' . $_GET['search'] . '%"  limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        echo $sql;
+        $r = $d->executeSql($sql);
+        $sql1 = 'select count(*) as number from videos where tid=' . $_GET['tid'] . ' and videoname like "%' . $_GET['search'] . '%"  limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        echo $sql1;
+        $res = mysqli_fetch_assoc($d->executeSql($sql1));
+        $data = intval($res['number'] / $pageSize) + 1;
+    } else if (isset($_GET['tid'])) {
+        $sql = "select * from videos where tid=" . $_GET['tid'] . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        echo $sql;
+        $r = $d->executeSql($sql);
+        $sql1 = "select count(*) as number from videos where tid=" . $_GET['tid'] . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        echo $sql1;
+        $res = mysqli_fetch_assoc($d->executeSql($sql1));
+
+        $data = intval($res['number'] / $pageSize) + 1;
+
+    } else if (isset($_GET['search'])) {
+        $sql = 'select * from videos where videoname like "%' . $_GET['search'] . '%"' . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;;
+        echo $sql;
+        $r = $d->executeSql($sql);
+        $sql1 = 'select count(*) as number from videos where videoname like "%' . $_GET['search'] . '%"' . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        echo $sql1;
+        $res = mysqli_fetch_assoc($d->executeSql($sql1));
+        $data = intval($res['number'] / $pageSize) + 1;
+    } else {
+        $sql = 'select * from videos' . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;;
+        echo $sql;
+        $r = $d->executeSql($sql);
+        $sql1 = 'select count(*) as number from videos' . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;;
+        //echo $sql1;
+        $res = mysqli_fetch_assoc($d->executeSql($sql1));
+        $data = intval($res['number'] / $pageSize) + 1;
+    }
+
+    return array($r, $data);
+
+}

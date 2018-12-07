@@ -139,7 +139,7 @@
                                                  <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="trandata(\'' . $num["tid"] . '\',\'' . $num["typename"] . '\');">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
                                                             <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
-                                                            <li><a href="../update.php?tid=' . $num['tid'] . '"><i class="icon-trash"></i> 删除</a></li>
+                                                            <li><a href="../update.php?tid=' . $num['tid'] . '" onclick="return del_videotype();"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>';
@@ -216,8 +216,18 @@
 <script src="../assets/js/jquery.flot.resize.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
+
+    let del_videotype = function () {
+        return confirm("是否删除该视频类型?") ? true : false;
+    };
+
     function add_videotype() {
+
         let video_type = $("#video_type").val();
+        if (video_type == ""){
+            alert("您未输入视频类型");
+            return;
+        }
         $.ajax({
             url: "process.php",
             data: {"video_type": video_type},

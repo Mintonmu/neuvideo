@@ -139,7 +139,7 @@
                                                  <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="trandata(\'' . $num["vid"] . '\',\'' . $num["videoname"] . '\',\'' . $num["tid"] . '\',\'' . $num["pic"] . '\',\'' . $num["intro"] . '\',\'' . $num["uploadadmin"] . '\',\'' . $num["address"] . '\');">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
                                                             <li><a href="#" data-toggle="modal" data-target="#myModal"><i class="icon-pencil"></i>编辑</a></li>
-                                                            <li><a href="../update.php?vid=' . $num['vid'] . '"><i class="icon-trash"></i> 删除</a></li>
+                                                            <li><a href="../update.php?vid=' . $num['vid'] . '" onclick="return del_video();"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>';
@@ -256,25 +256,9 @@
 <script src="../assets/js/jquery.flot.resize.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
-    function add_videotype() {
-        let video_type = $("#videotype").val();
-        $.ajax({
-            url: "process.php",
-            data: {"video_type": video_type},
-            type: 'post',
-            dataType: 'text',
-            success: function (result) {
-                if (result == "success") {
-                    alert("添加视频类型成功");
-                    self.location.reload(true);
-                }
-            },
-            error: function (result) {
-                alert("添加视频类型失败");
-                self.history.go(-1);
-            }
-        })
 
+    let del_video = function () {
+        return confirm("是否删除本视频?") ? true : false;
     };
     if (typeof FileReader == 'undefined') {
         document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";

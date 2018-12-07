@@ -1,22 +1,33 @@
-<!DOCTYPE>
-<html>
-<?php
-//if ($_SERVER['HTTP_REFERER'] == "") {
-//    echo "<script>confirm('本系统不允许从地址栏访问');</script>";
-//    echo "<script>location.href= \"index.php\";</script>";
-//    exit();
-//}
-//?>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Neu视频</title>
-    <link rel="stylesheet" type="text/css" href="assets/banner.css">
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-</head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+</head>
 <body>
+<?php
+if (!isset($_GET['pageNum'])) {
+    $_GET['pageNum'] = 1;
+}
+if (!isset($_GET['pageSize'])) {
+    $_GET['pageSize'] = 12;
+}
+?>
 <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -24,14 +35,20 @@
         </div>
         <div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">首页</a></li>
+                <li><a href="welcome.php">首页</a></li>
                 <?php
                 include('system/dbConn.php');
                 $d = new DBconnect();
                 $res = $d->selectALL('videotype');
                 while ($row = mysqli_fetch_assoc($res)) {
-                    echo '<li class="nav-item "><a  class="nav-link" href="CatPage.php?tid=' . $row['tid'] . '">' .
-                        $row['typename'] . '</a></li>';
+                    if ($_GET['tid'] == $row['tid']) {
+                        echo '<li class="nav-item active"><a  class="nav-link" href="CatPage.php?tid=' . $row['tid'] . '">' .
+                            $row['typename'] . '</a></li>';
+                    } else {
+
+                        echo '<li class="nav-item"><a  class="nav-link" href="CatPage.php?tid=' . $row['tid'] . '">' .
+                            $row['typename'] . '</a></li>';
+                    }
                 }
                 ?>
                 <div class="dropdown pull-right" style="left: 100%">
@@ -40,7 +57,6 @@
                             session_start();
                             $c = $d->executeSql("select * from users where uname=" . $_SESSION["username"]);
                             $res = mysqli_fetch_assoc($c);
-
                             echo $_SESSION["username"]; ?></a>
                         <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
                             <span class="caret"></span>
@@ -54,49 +70,67 @@
                 </div>
             </ul>
             <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <input name="search" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
             </ul>
         </div>
     </div>
 </nav>
-<div class="banner" id="banner1" style="margin: 40px auto;">
-    <div class="banner-view"></div>
-    <div class="banner-btn"></div>
-    <div class="banner-number"></div>
-    <div class="banner-progres"></div>
-</div>
-<div class="container">
+<div class="bs-example" data-example-id="thumbnails-with-custom-content">
+
     <?php
-    $r = $d->executeSql("select * from videotype");
-    while ($row = mysqli_fetch_assoc($r)) {
-        echo '<div align="center">
-            <h1 style="color: #F0F8FF">' . $row['typename'] . '</h1>
-            </div>';
-        echo '<div class="row">';
-        $rr = $d->executeSql("SELECT * FROM (
-                                    SELECT *, ABS(NOW() - uploaddate) AS diffTime
-                                    FROM videos
-                                    ORDER BY diffTime ASC
-                                    ) videos where tid = " . $row['tid'] . " LIMIT 3");
-        while ($row2 = mysqli_fetch_assoc($rr)) {
-            $video_id = $row2['vid'];
-            $video_name = $row2['videoname'];
-            $video_url = 'videodetail.php?vid=' . $video_id;
-            $video_pic = './posters/' . $row2['pic'];
-            echo '<div class="col-xs-6 col-md-4" align="center">' .
-                '<a href="' . $video_url . '" class="thumbnail">' .
-                '<img src="' . $video_pic . '" alt="' . $video_name . '">' .
-                '</a>' .
-                '<a href="' . $video_url . '"><lable id="title" > <font size="5">' . $video_name . '</font></lable></a>' .
-                '</div>';
-        }
-        echo '</div>';
+    $pageNum = $_GET['pageNum'];
+    $pageSize = $_GET['pageSize'];
+    if (isset($_GET['tid']) && isset($_GET['search'])) {
+        $sql = 'select * from videos where tid=' . $_GET['tid'] . ' and videoname like "%' . $_GET['search'] . '%"  limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        //echo $sql;
+        $r = $d->executeSql($sql);
+        $sql1 = 'select count(*) as number from videos where tid=' . $_GET['tid'] . ' and videoname like "%' . $_GET['search'] . '%"  limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        //echo $sql1;
+        $res = mysqli_fetch_assoc($d->executeSql($sql1));
+        $data = intval($res['number'] / $pageSize) + 1;
+    } else if (isset($_GET['tid'])) {
+        $sql = "select * from videos where tid=" . $_GET['tid'] . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        //echo $sql;
+        $r = $d->executeSql($sql);
+        $sql1 = "select count(*) as number from videos where tid=" . $_GET['tid'] . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        //echo $sql1;
+        $res = mysqli_fetch_assoc($d->executeSql($sql1));
+
+        $data = intval($res['number'] / $pageSize) + 1;
+
+    } else if (isset($_GET['search'])) {
+        $sql = 'select * from videos where videoname like "%' . $_GET['search'] . '%"' . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;;
+        //echo $sql;
+        $r = $d->executeSql($sql);
+        $sql1 = 'select count(*) as number from videos where videoname like "%' . $_GET['search'] . '%"' . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        //echo $sql1;
+        $res = mysqli_fetch_assoc($d->executeSql($sql1));
+        $data = intval($res['number'] / $pageSize) + 1;
+    } else {
+        $sql = 'select * from videos' . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;;
+        //echo $sql;
+        $r = $d->executeSql($sql);
+        $sql1 = 'select count(*) as number from videos' . ' limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;;
+        //echo $sql1;
+        $res = mysqli_fetch_assoc($d->executeSql($sql1));
+        $data = intval($res['number'] / $pageSize) + 1;
+    }
+    while ($res = mysqli_fetch_assoc($r)) {
+        echo '<div class="row"><div class="col-sm-6 col-md-4"><div class="thumbnail">';
+        echo '<img data-src="posters/' . $res['pic'] . ' alt="50%x100" src="posters/' . $res['pic'] . '" data-holder-rendered="true" style="height: 50%; width: 50%; display: block;">';
+        echo ' <div class="caption"><h3>' . $res['videoname'] . '</h3>';
+        echo '<p>' . $res['intro'] . '</p>';
+        echo '<p><a href="videodetail.php?vid=' . $res['vid'] . '" class="btn btn-primary" role="button">详情</a></p>
+          </div>
+        </div>
+      </div>';
     }
     ?>
 </div>
-
+</div>
+</div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -164,89 +198,55 @@
     </div><!-- /.modal -->
 </div>
 
-
-<script type="text/javascript" src="assets/banner.js"></script>
+</body>
+<script type="text/javascript" src="assets/js/swiper.min.js"></script>
 <script type="text/javascript">
 
-    var banner = new FragmentBanner({
-        container: "#banner1",//选择容器 必选
-        imgs: ['index/a1.png', 'index/a2.png', 'index/a3.png', 'index/a4.png', 'index/a5.png'],//图片集合 必选
-        size: {
-            width: 1000,
-            height: 560
-        },//容器的大小 可选
-        //行数与列数 可选
-        grid: {
-            line: 12,
-            list: 14
-        },
-        index: 0,//图片集合的索引位置 可选
-        type: 2,//切换类型 1 ， 2 可选
-        boxTime: 5000,//小方块来回运动的时长 可选
-        fnTime: 10000//banner切换的时长 可选
-    });
-</script>
 
-<div style="text-align:center;">
-</div>
-</body>
-
-</html>
-<script>
-    function modify_f() {
-
-        let username = $('#uname_pro').val();
-        if (username === '') {
-            alert("必须输入用户名");
-            return;
-        }
-        let form = new FormData();
-        let password = $('#password1_pro').val();
-        if (password != '') {
-            form.append("password", password);
-        }
-        let type = $("input[name = 'gender_pro']:checked").val();
-        console.log(type);
-        let birthday = $('#birthdate_pro').val();
-        let email = $('#email_pro').val();
-        let img_file = document.getElementById("xdaTanFileImg");
-        let fileObj = img_file.files[0];
-        if (typeof(fileObj) == "undefined") {
-            console.log("img undefind");
-        } else {
-            form.append("img", fileObj);
-        }
-        form.append("username", username);
-        form.append("type", type);
-        form.append("birthday", birthday);
-        form.append("email", email);
-        form.append("user_pro", 1);
-        console.log("编辑");
-        let uid = $('#uid').val();
-        form.append('uid', uid);
-
-        $.ajax({
-            url: 'admin/update.php',
-            type: 'post',
-            data: form,
-            dataType: 'text',
-            async: false,
-            processData: false,
-            contentType: false,
-            success: function (result) {
-                console.log(result);
-                alert("修改信息成功");
-                window.location.reload();
-
+    window.onload = function () {
+        var swiper = new Swiper('.swiper-container', {
+            autoplay: true,
+            speed: 2500,
+            autoplayDisableOnInteraction: false,
+            loop: true,
+            centeredSlides: true,
+            slidesPerView: 2,
+            pagination: '.swiper-pagination',
+            paginationClickable: true,
+            prevButton: '.swiper-button-prev',
+            nextButton: '.swiper-button-next',
+            onInit: function (swiper) {
+                swiper.slides[2].className = "swiper-slide swiper-slide-active";
             },
-            error: function (data) {
-                console.log(data);
-                alert("失败");
-                window.location.reload();
+            breakpoints: {
+                668: {
+                    slidesPerView: 1,
+                }
             }
-        })
+        });
     }
 
+
+    //设置cookie
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + "; " + expires;
+    }
+
+    function modify() {
+        $("#modify_label").text("修改个人信息");
+        $('#modify_dialog').modal();
+    }
+
+    function openSearch() {
+        let te = $("#search").val();
+    }
+</script>
+
+
+<script type="text/javascript">
     //判断浏览器是否支持FileReader接口
     if (typeof FileReader == 'undefined') {
         document.getElementById("xmTanDiv").InnerHTML = "<h1>当前浏览器不支持FileReader接口</h1>";
@@ -256,11 +256,11 @@
 
     //选择图片，马上预览
     function xmTanUploadImg(obj) {
-        let file = obj.files[0];
+        var file = obj.files[0];
         console.log(obj);
         console.log(file);
         console.log("file.size = " + file.size);  //file.size 单位为byte
-        let reader = new FileReader();
+        var reader = new FileReader();
         //读取文件过程方法
         reader.onloadstart = function (e) {
             console.log("开始读取....");
@@ -276,9 +276,11 @@
         }
         reader.onload = function (e) {
             console.log("成功读取....");
-            let img = document.getElementById("xmTanImg");
+            var img = document.getElementById("xmTanImg");
             img.src = e.target.result;
+            //或者 img.src = this.result;  //e.target == this
         }
         reader.readAsDataURL(file)
     }
 </script>
+</html>

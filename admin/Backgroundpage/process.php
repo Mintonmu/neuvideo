@@ -9,7 +9,34 @@ include '../../system/dbConn.php';
 $p = new DBconnect();
 date_default_timezone_set("Asia/Shanghai");
 session_start();
-
+if (isset($_POST['count'])) {
+    $count = $_POST['count'];
+    $vid = $_POST['vid'];
+    $r = $p->executeSql("select * from levels where vid=$vid and uid=" . $_SESSION['uid']);
+    $num = mysqli_num_rows($r);
+    if ($num>0) {
+        $lid = mysqli_fetch_assoc($r)['lid'];
+        $p->update("levels", array('score'), array($count), 'lid', $lid);
+        echo 'update';
+    } else {
+        $rse = $p->insert("levels", array('vid', 'uid', 'score'), array($vid, $_SESSION['uid'], $count));
+        echo 'insert';
+    }
+    return;
+}
+if (isset($_POST['cmt'])) {
+    $comments = $_POST['cmt'];
+    $vid = $_POST['vid'];
+    $uid = $_SESSION['uid'];
+    $time = date("y-m-d H:i:s", time());
+    $rs = $p->insert("comments", array('content', 'cdate', 'uid', 'vid'), array($comments, $time, $uid, $vid));
+    if ($rs) {
+        echo 'success';
+    } else {
+        echo 'error';
+    }
+    return;
+}
 //添加视频类型
 if (isset($_POST["video_type"])) {
     $video_type = $_POST["video_type"];

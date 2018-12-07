@@ -135,7 +135,7 @@
                                <div class="btn-group">
                                                  <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#" onclick="transdata(\'' . $num["adminname"] . '\',\'' . $num["password"] . '\',\'' . $num["adminid"] . '\')">设置<span class="caret"></span></a>
                                                         <ul class="dropdown-menu">
-                                                            <li><a href="../update.php?cid=' . $num['cid'] . '"><i class="icon-trash"></i> 删除</a></li>
+                                                            <li><a href="../update.php?cid=' . $num['cid'] . '" onclick="return del_comm();"><i class="icon-trash"></i> 删除</a></li>
                                                         </ul>
                                                     </div>
                                                 </td>';
@@ -181,6 +181,10 @@
 <script src="../assets/js/jquery.flot.resize.js"></script>
 <script src="../assets/js/bootstrap.min.js"></script>
 <script>
+
+    let del_comm = function () {
+        return confirm("是否删除该条评论?") ? true : false;
+    };
     $(function () {
         var data = [
             {
