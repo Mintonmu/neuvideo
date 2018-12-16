@@ -42,7 +42,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="my-profile.php">我的信息</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">登出</a></li>
+                    <li><a href="../doAdminLogin.php">登出</a></li>
                 </ul>
             </div>
             <div class="nav-collapse">
@@ -93,7 +93,7 @@
                 <ul class="nav nav-list">
                     <li class="nav-header"><i class="icon-wrench"></i> 用户和管理员</li>
                     <li><a href="users.php">用户</a></li>
-                    <li class="active"><a href="roles.php">管理员</a></li>
+                    <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
                     <li><a href="videotype.php">视频类型管理</a></li>
@@ -190,7 +190,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Register</h4>
+                    <h4 class="modal-title" id="myModalLabel">视频信息</h4>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -332,11 +332,6 @@
             success: function (result) {
                 $("#myModal").modal('hide');
                 if (result == "success") {
-                    $("#vid").val(vid);
-                    $("#videoname_pro").val(videoname_pro);
-                    $("#videotype_pro").val(videotype_pro);
-                    $("#description_pro").val(intro);
-                    $("#address_pro").val(address_pro);
                     alert("您已经修改成功");
                     location.reload(true);
                 }

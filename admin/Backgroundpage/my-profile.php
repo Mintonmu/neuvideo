@@ -35,7 +35,7 @@
                 <ul class="dropdown-menu">
                     <li><a href="my-profile.php">Profile</a></li>
                     <li class="divider"></li>
-                    <li><a href="#">登出</a></li>
+                    <li><a href="../doAdminLogin.php">登出</a></li>
                 </ul>
             </div>
             <div class="nav-collapse">
@@ -86,7 +86,7 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
-                    <li class="active"><a href="users.php">用户</a></li>
+                    <li><a href="users.php">用户</a></li>
                     <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>

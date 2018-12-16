@@ -6,16 +6,15 @@
  * Time: 12:14
  */
 require("../../system/dbConn.php");
-function getUsersDate($pageNum, $pageSize) //$kw
+function getUsersDate($pageNum, $pageSize, $kw) //$kw
 {
     $p = connect();
     $sql = "select * from users order by `uid` desc limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
     $sql1 = 'select count(*) as number from users';
-//未来添加搜索
-//    if ($kw != '') {
-//        $sql = 'select * from users where uname like "%' . $kw . '%" limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
-//        sql1 = 'select count(*) as number from users where uname like "%' . $kw . '%"';
-//    }
+    if ($kw != '') {
+        $sql = 'select * from users where uname like "%' . $kw . '%" limit ' . (($pageNum - 1) * $pageSize) . "," . $pageSize;
+        $sql1 = 'select count(*) as number from users where uname like "%' . $kw . '%"';
+    }
     $rs = mysqli_query($p, $sql);
     $c = mysqli_query($p, $sql1);
 

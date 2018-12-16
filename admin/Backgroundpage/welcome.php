@@ -73,7 +73,7 @@
                             <li class="divider"></li>
                             <li><a href="video.php">视频管理</a></li>
                             <li class="divider"></li>
-                            <li><a href="videotype.php">视频类型管理</a> </li>
+                            <li><a href="videotype.php">视频类型管理</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
@@ -95,15 +95,15 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
-                    <li class="active"><a href="users.php">用户</a></li>
+                    <li><a href="users.php">用户</a></li>
                     <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
-                    <li><a href="videotype.php">视频类型管理</a> </li>
+                    <li><a href="videotype.php">视频类型管理</a></li>
                     <li><a href="comment.php">评论管理</a></li>
                     <li class="nav-header"><i class="icon-user"></i>信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
-                    <li><a href="#">登出</a></li>
+                    <li><a href="../doAdminLogin.php">登出</a></li>
                 </ul>
             </div>
         </div>
@@ -126,7 +126,7 @@
                 </div>
                 <div class="span3">
                     <h3>视频数量</h3>
-                    <p><a href="users.php" class="badge badge-inverse"><?php
+                    <p><a href="video.php" class="badge badge-inverse"><?php
                             $sql = "select count(*) as videonumber from videos";
                             $rs = mysqli_query($link, $sql);
                             echo mysqli_fetch_assoc($rs)['videonumber'];
@@ -135,7 +135,7 @@
                 </div>
                 <div class="span3">
                     <h3>评论数量</h3>
-                    <p><a href="users.php" class="badge badge-inverse"><?php
+                    <p><a href="comment.php" class="badge badge-inverse"><?php
                             $sql = "select count(*) as commentnumber from comments";
                             $rs = mysqli_query($link, $sql);
                             echo mysqli_fetch_assoc($rs)['commentnumber'];

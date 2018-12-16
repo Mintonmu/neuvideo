@@ -215,7 +215,7 @@ if ($rr){
             }
             //echo $pageNum;
             $sql = "SELECT comments.content,comments.cdate,users.uname,users.pic,levels.score FROM users JOIN comments ON users.uid = comments.uid JOIN levels ON comments.uid = levels.uid AND comments.vid = levels.vid  where levels.vid = " . $_GET['vid'] . " order by cdate limit " . (($pageNum - 1) * $pageSize) . "," . $pageSize;
-            echo $sql;
+            //echo $sql;
             $r = $d->executeSql($sql);
             ?>
             <div class="review-list  ">
@@ -346,51 +346,6 @@ if ($rr){
         })
 
     };
-    //
-    //    var canSubmit = false;
-    //    <?php
-    //    if (!isset($_COOKIE['uid']))
-    //        $uid = 0;
-    //    else {
-    //        $uid = $_COOKIE['uid'];
-    //    }
-    //    $rrr = $d->executeSql("select * from levels where vid=" . $vid . " and uid=" . $uid);
-    //    $rq = mysqli_fetch_assoc($rrr);
-    //    if ($rq) {
-    //        $stars = $rq['score'];
-    //        echo "$('#rating').star('unbindEvent');";
-    //        echo "canSubmit=true";
-    //    } else {
-    //        $stars = 0;
-    //    }
-    //    ?>
-
-    //
-    //
-    //    $('#rating').star({
-    //        modus: 'entire', //点亮模式 （‘half’半颗， ‘entire’整颗）
-    //        total: 5, //默认共几颗星
-    //        num: <?php //echo $stars?>//, //默认点亮个数
-    //        readOnly: false, //默认是否只读，
-    //        chosen: function (_count, total) { //点击后事件
-    //
-    //            if (<?php
-    //                if (!isset($_COOKIE['uid']))
-    //                    echo 'true';
-    //                else {
-    //                    echo 'false';
-    //                }
-    //                ?>//) {
-    //                alert("登陆后才能评价");
-    //                return;
-    //            }
-    //            count = _count;
-    //            console.log("star: " + count);
-    //
-    //            canSubmit = true;
-    //        }
-    //    })
-    //    var count;
 
 </script>
 <style>

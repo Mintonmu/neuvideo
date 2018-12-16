@@ -9,12 +9,14 @@ include '../../system/dbConn.php';
 $p = new DBconnect();
 date_default_timezone_set("Asia/Shanghai");
 session_start();
+
+//添加和更新评价星级
 if (isset($_POST['count'])) {
     $count = $_POST['count'];
     $vid = $_POST['vid'];
     $r = $p->executeSql("select * from levels where vid=$vid and uid=" . $_SESSION['uid']);
     $num = mysqli_num_rows($r);
-    if ($num>0) {
+    if ($num > 0) {
         $lid = mysqli_fetch_assoc($r)['lid'];
         $p->update("levels", array('score'), array($count), 'lid', $lid);
         echo 'update';
@@ -24,6 +26,8 @@ if (isset($_POST['count'])) {
     }
     return;
 }
+
+//添加评论信息
 if (isset($_POST['cmt'])) {
     $comments = $_POST['cmt'];
     $vid = $_POST['vid'];
@@ -40,12 +44,20 @@ if (isset($_POST['cmt'])) {
 //添加视频类型
 if (isset($_POST["video_type"])) {
     $video_type = $_POST["video_type"];
-    $p->insert("videotype", array('typename'), array($video_type));
-    echo "success";
-    return;
+    $sql = "select * from videotype where typename = '$video_type'";
+    $re = $p->executeSql($sql);
+    $num = mysqli_num_rows($re);
+    if ($num) {
+        echo "repeat";
+        return;
+    } else {
+        $p->insert("videotype", array('typename'), array($video_type));
+        echo "success";
+        return;
+    }
 }
 
-
+//修改视频类型
 if (isset($_POST["typename"])) {
     $typename = $_POST['typename'];
     if (isset($_POST['tid'])) {

@@ -14,10 +14,11 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./assets/reset.css">
+    <link rel="stylesheet" type="text/css" href="./assets/css.css">
 </head>
-
-<body>
-<nav class="navbar navbar-default" role="navigation">
+<body style="background-image: url('./index/backimage.jpeg');background-repeat: no-repeat;">
+<nav class="navbar navbar-inverse" role="navigation" style="padding-bottom: 0">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Neu视频网站</a>
@@ -53,20 +54,34 @@
                     </div>
                 </div>
             </ul>
-            <form class="form-inline mt-2 mt-md-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
             </ul>
         </div>
     </div>
 </nav>
-<div class="banner" id="banner1" style="margin: 40px auto;">
-    <div class="banner-view"></div>
-    <div class="banner-btn"></div>
-    <div class="banner-number"></div>
-    <div class="banner-progres"></div>
+
+
+<div class="train_banner">
+    <ul class="banner_images clearfix">
+        <li><a href="#"><img src="index/a9.jpg" alt=""></a></li>
+        <li><a href="#"><img src="index/a8.jpg" alt=""></a></li>
+        <li><a href="#"><img src="index/a7.jpg" alt=""></a></li>
+        <li><a href="#"><img src="index/a4.jpg" alt=""></a></li>
+        <li><a href="#"><img src="index/a5.jpg" alt=""></a></li>
+        <li><a href="#"><img src="index/a6.jpg" alt=""></a></li>
+    </ul>
+    <ul class="banner_index clearfix">
+        <div class="banner_index-frame">
+            <li class='current'></li>
+        </div>
+    </ul>
+    <div class="train_banner_left">
+        <div class="train_banner_li"><img src="index/train-banner-left.png"></div>
+    </div>
+    <div class="train_banner_right">
+        <div class="train_banner_li"><img src="index/train-banner-right.png"></div>
+    </div>
 </div>
+
 <div class="container">
     <?php
     $r = $d->executeSql("select * from videotype");
@@ -165,34 +180,20 @@
 </div>
 
 
-<script type="text/javascript" src="assets/banner.js"></script>
-<script type="text/javascript">
-
-    var banner = new FragmentBanner({
-        container: "#banner1",//选择容器 必选
-        imgs: ['index/a1.png', 'index/a2.png', 'index/a3.png', 'index/a4.png', 'index/a5.png'],//图片集合 必选
-        size: {
-            width: 1000,
-            height: 560
-        },//容器的大小 可选
-        //行数与列数 可选
-        grid: {
-            line: 12,
-            list: 14
-        },
-        index: 0,//图片集合的索引位置 可选
-        type: 2,//切换类型 1 ， 2 可选
-        boxTime: 5000,//小方块来回运动的时长 可选
-        fnTime: 10000//banner切换的时长 可选
-    });
-</script>
-
 <div style="text-align:center;">
 </div>
 </body>
 
 </html>
+
+<script type="text/javascript" src="assets/index.js"></script>
 <script>
+    window.onload = function () {
+        banner();
+    }
+</script>
+<script>
+
     function modify_f() {
 
         let username = $('#uname_pro').val();

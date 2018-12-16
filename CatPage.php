@@ -19,7 +19,7 @@
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="background-image: url('./index/backimage.jpeg');background-repeat: no-repeat;">
 <?php
 if (!isset($_GET['pageNum'])) {
     $_GET['pageNum'] = 1;
@@ -28,7 +28,7 @@ if (!isset($_GET['pageSize'])) {
     $_GET['pageSize'] = 12;
 }
 ?>
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Neu视频网站</a>

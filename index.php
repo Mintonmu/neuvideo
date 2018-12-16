@@ -85,12 +85,6 @@
                         <h4 class="modal-title" id="myModalLabel">Register</h4>
                     </div>
                     <div class="modal-body">
-                        <!--                            <div class="alert alert-warning" id="tooltip">-->
-                        <!--                                <a href="#" class="close" data-dismiss="alert">-->
-                        <!--                                    &times;-->
-                        <!--                                </a>-->
-                        <!--                                <strong>警告！</strong>您两次输入的密码不一致-->
-                        <!--                            </div>-->
                         <form action="" method="post" enctype="multipart/form-data">
                             <label style="vertical-align: inherit;">用 户 名:</label>
                             <input type="text" name="uname" id="uname" placeholder="用户名">

@@ -25,7 +25,7 @@
             </a>
             <a class="brand" href="welcome.php">Neu视频后台管理系统</a>
             <div class="btn-group pull-right">
-                <a class="btn" href="my-profile.php"><i class="icon-user"></i><?php if (!isset($_SESSION)) {
+                <a class="btn" href="my-profile.php"><i class="icon-user"></i> <?php if (!isset($_SESSION)) {
                         session_start();
                     }
                     echo $_SESSION["adminname"]; ?></a>
@@ -35,13 +35,13 @@
                 <ul class="dropdown-menu">
                     <li><a href="my-profile.php">我的信息</a></li>
                     <li class="divider"></li>
-                    <li><a href="../Adminlogout.php">登出</a></li>
+                    <li><a href="../doAdminLogin.php">登出</a></li>
                 </ul>
             </div>
             <div class="nav-collapse">
                 <ul class="nav">
                     <li><a href="welcome.php">主页</a></li>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户<b
+                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">用户 <b
                                     class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li class="divider"></li>
@@ -63,7 +63,7 @@
                             <li class="divider"></li>
                             <li><a href="video.php">视频管理</a></li>
                             <li class="divider"></li>
-                            <li><a href="videotype.php">视频类型管理</a> </li>
+                            <li><a href="videotype.php">视频类型管理</a></li>
                         </ul>
                     </li>
                     <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">评论<b
@@ -79,17 +79,18 @@
     </div>
 </div>
 
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header"><i class="icon-wrench"></i>用户和管理员</li>
-                    <li class="active"><a href="users.php">用户</a></li>
+                    <li><a href="users.php">用户</a></li>
                     <li><a href="roles.php">管理员</a></li>
                     <li class="nav-header"><i class="icon-signal"></i>视频和评论</li>
                     <li><a href="video.php">视频管理</a></li>
-                    <li><a href="videotype.php">视频类型管理</a> </li>
+                    <li><a href="videotype.php">视频类型管理</a></li>
                     <li><a href="comment.php">评论管理</a></li>
                     <li class="nav-header"><i class="icon-user"></i>信息</li>
                     <li><a href="my-profile.php">我的信息</a></li>
@@ -105,6 +106,11 @@
                     </h1>
                 </div>
                 <table class="table table-striped table-bordered table-condensed">
+                    <form class="form-inline" method="get">
+                        <input type="text" class="input-large" placeholder="Search.." name="search">
+
+                        <button type="submit" class="btn btn-primary">搜索</button>
+                    </form>
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -121,7 +127,11 @@
                     if (!isset($_GET["size"])) {
                         $_GET['size'] = 5;
                     }
-                    $ary = getUsersDate($_GET['num'], $_GET['size']);
+                    $kw = '';
+                    if (isset($_GET['search'])) {
+                        $kw = $_GET['search'];
+                    }
+                    $ary = getUsersDate($_GET['num'], $_GET['size'], $kw);
 
                     while ($num = mysqli_fetch_assoc($ary[0])) {
                         echo '<tr class="list-users">';
@@ -148,29 +158,33 @@
                     <ul>
                         <?php
                         //echo 1;
+                        $kw = '';
+                        if (isset($_GET['search'])) {
+                            $kw = $_GET['search'];
+                        }
                         if (!isset($_GET["num"])) {
                             $_GET['num'] = 1;
                         }
                         if (!isset($_GET["size"])) {
                             $_GET['size'] = 5;
                         }
-                        $ary = getUsersDate($_GET['num'], $_GET['size']);
+                        $ary = getUsersDate($_GET['num'], $_GET['size'], $kw);
                         //echo $ary[1];
 
                         if (intval($_GET['num']) == 1) {
-                            echo "<li><a href=\"users.php?num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
+                            echo "<li><a href=\"users.php?search=$kw&num=1&size=" . $_GET['size'] . "\">Prev</a></li>";
 
                         } else {
-                            echo "<li><a href=\"users.php?num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
+                            echo "<li><a href=\"users.php?search=$kw&num=" . (intval($_GET['num']) - 1) . "&size=" . $_GET['size'] . "\">Prev</a></li>";
                         }
                         for ($i = 1; $i <= $ary[1]; $i++) {
-                            echo "<li>" . "<a href=\"users.php?num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
+                            echo "<li>" . "<a href=\"users.php?search=$kw&num=$i&size=" . $_GET['size'] . "\">" . $i . "</a></li>";
                         }
                         if (intval($_GET['num']) == $ary[2]) {
-                            echo "<li><a href=\"users.php?num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
+                            echo "<li><a href=\"users.php?search=$kw&num=$ary[2]&size=" . $_GET['size'] . "\">Next</a></li>";
 
                         } else {
-                            echo "<li><a href=\"users.php?num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
+                            echo "<li><a href=\"users.php?search=$kw&num=" . (intval($_GET['num']) + 1) . "&size=" . $_GET['size'] . "\">Next</a></li>";
                         }
                         ?>
                     </ul>
@@ -254,7 +268,7 @@
         $("#uid").val(uid);
         $("#birthdate_pro").val(birthdate);
         $("#email_pro").val(email);
-        $("#xmTanImg").attr("src", "../" + "." + pic);
+        $("#xmTanImg").attr("src", "../../" + pic);
         if (gender == 0) {
             $("input[name = 'gender_pro']").eq(0).attr("checked", "checked");
             $("input[name = 'gender_pro']").eq(1).removeAttr("checked");
@@ -265,65 +279,6 @@
             $("input[name = 'gender_pro']").eq(1).click();
         }
     };
-    // let modify_submit = function () {
-    //     let form = new FormData();
-    //     let uname_pro = $("#uname_pro").val();
-    //     let password_pro = $("#password1_pro").val();
-    //     let uid = $("#uid").val();
-    //     let gender = $("input[name = 'gender_pro']:checked").val();
-    //     let birthday = $("#birthdate_pro").val();
-    //     let img_file = document.getElementById("xdaTanFileImg");
-    //     let fileObj = img_file.files[0];
-    //     let email = $("#email_pro").val();
-    //     if (typeof(fileObj) == "undefined") {
-    //         console.log("img undefind");
-    //     } else {
-    //         form.append("img", fileObj);
-    //     }
-    //     form.append("username", uname_pro);
-    //     form.append("type", gender);
-    //     form.append("birthday", birthday);
-    //     form.append("email", email);
-    //     form.append("user_pro", 1);
-    //     form.append("uid", uid);
-    //     form.append("password", password_pro);
-    //     form.append("img", fileObj);
-    //
-    //     $.ajax({
-    //         url: '../update.php',
-    //         type: 'post',
-    //         data: form,
-    //         dataType: 'text',
-    //         success: function (result) {
-    //             $("#myModal").modal('hide');
-    //             console.log(result);
-    //             if (result == "success") {
-    //                 // $("#uname_pro").val(uname);
-    //                 // $("#password1_pro").val(password);
-    //                 // $("#uid").val(uid);
-    //                 // $("#birthdate_pro").val(birthdate);
-    //                 // $("#email_pro").val(email);
-    //                 // $("#xmTanImg").attr("src", "../" + "." + pic);
-    //                 // if (gender == 0) {
-    //                 //     $("input[name = 'gender_pro']").eq(0).attr("checked", "checked");
-    //                 //     $("input[name = 'gender_pro']").eq(1).removeAttr("checked");
-    //                 //     $("input[name = 'gender_pro']").eq(0).click();
-    //                 // } else {
-    //                 //     $("input[name = 'gender_pro']").eq(1).attr("checked", "checked");
-    //                 //     $("input[name = 'gender_pro']").eq(0).removeAttr("checked");
-    //                 //     $("input[name = 'gender_pro']").eq(1).click();
-    //                 // }
-    //                 console.log(result);
-    //                 alert("修改信息成功");
-    //                 window.location.reload();
-    //             }
-    //         },
-    //         error: function (msg) {
-    //             alert(msg);
-    //         }
-    //     })
-    //
-    // };
 
     function del_user() {
 

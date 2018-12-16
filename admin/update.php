@@ -13,6 +13,7 @@ session_start();
 //删除视频类型;
 if (isset($_GET['tid'])) {
     $tid = $_GET['tid'];
+    //todo 视频类型下的视频单独判断
     $sql = "delete from videotype where tid = '$tid'";
     $p->executeSql($sql);
     echo "success";
@@ -20,7 +21,6 @@ if (isset($_GET['tid'])) {
     return;
 }
 //更新视频数据
-
 if (isset($_POST["videoname_pro"])) {
 
     $videoname_pro = $_POST["videoname_pro"];
@@ -100,15 +100,6 @@ if (isset($_POST["videoname"])) {
     header("location:./Backgroundpage/video.php");
     return;
 }
-////删除用户
-if (isset($_POST["userid"])) {
-    $uid = $_POST["userid"];
-    $sql1 = "delete from users where uid=$uid ";
-    $p->executeSql($sql1);
-    echo "6";
-    return;
-
-}
 //删除管理员
 if (isset($_POST["adminid"])) {
     $aid = $_POST["adminid"];
@@ -119,6 +110,16 @@ if (isset($_POST["adminid"])) {
     return;
 
 }
+////删除用户
+if (isset($_POST["userid"])) {
+    $uid = $_POST["userid"];
+    $sql1 = "delete from users where uid=$uid ";
+    $p->executeSql($sql1);
+    echo "6";
+    return;
+
+}
+
 //更新用户数据
 if (isset($_POST['user_pro'])) {
     echo $_POST['username'];
