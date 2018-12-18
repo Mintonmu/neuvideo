@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Neu视频网</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -226,23 +226,6 @@ if (!isset($_GET['pageSize'])) {
         });
     }
 
-
-    //设置cookie
-    function setCookie(cname, cvalue, exdays) {
-        var d = new Date();
-        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-        var expires = "expires=" + d.toUTCString();
-        document.cookie = cname + "=" + cvalue + "; " + expires;
-    }
-
-    function modify() {
-        $("#modify_label").text("修改个人信息");
-        $('#modify_dialog').modal();
-    }
-
-    function openSearch() {
-        let te = $("#search").val();
-    }
 </script>
 
 

@@ -9,7 +9,7 @@
 //?>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Neu视频</title>
+    <title>Neu视频网</title>
     <link rel="stylesheet" type="text/css" href="assets/banner.css">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="./assets/css.css">
 </head>
 <body style="background-image: url('./index/backimage.jpeg');background-repeat: no-repeat;">
-<nav class="navbar navbar-inverse" role="navigation" style="padding-bottom: 0">
+<nav class="navbar navbar-inverse" role="navigation" style="padding-bottom: 0;">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="#">Neu视频网站</a>
@@ -39,7 +39,7 @@
                     <div class="btn-group pull-right">
                         <a class="btn" href="#"><i class="icon-user"></i><?php
                             session_start();
-                            $c = $d->executeSql("select * from users where uname=" . $_SESSION["username"]);
+                            $c = $d->executeSql("select * from users where uname=\"" . $_SESSION["username"]."\"");
                             $res = mysqli_fetch_assoc($c);
 
                             echo $_SESSION["username"]; ?></a>
@@ -59,8 +59,7 @@
     </div>
 </nav>
 
-
-<div class="train_banner">
+<div class="train_banner" style="margin-top: -20px;">
     <ul class="banner_images clearfix">
         <li><a href="#"><img src="index/a9.jpg" alt=""></a></li>
         <li><a href="#"><img src="index/a8.jpg" alt=""></a></li>
@@ -111,7 +110,6 @@
     }
     ?>
 </div>
-
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
@@ -222,7 +220,6 @@
         form.append("birthday", birthday);
         form.append("email", email);
         form.append("user_pro", 1);
-        console.log("编辑");
         let uid = $('#uid').val();
         form.append('uid', uid);
 
